@@ -4,7 +4,7 @@
  */
 
 .masked-font {
-  color: $ui-gray-300;
+  color: var(--hv-fg-subtle);
 }
 
 .masked-input {
@@ -53,7 +53,7 @@
 .button.download-button {
   min-width: $spacing-xl;
   border-left: 0;
-  color: $grey;
+  color: var(--hv-fg-muted);
   box-shadow: 0 3px 1px 0px rgba(10, 10, 10, 0.12);
 }
 
@@ -76,7 +76,7 @@
     min-width: $spacing-l;
     border: 0;
     box-shadow: none;
-    color: $grey-light;
+    color: var(--hv-fg-muted);
     padding-left: 0;
     padding-right: 0;
 
@@ -93,9 +93,9 @@
 }
 
 .masked-input.masked .masked-value {
-  color: $grey-light;
+  color: var(--hv-fg-muted);
 }
 
 .masked-input .input:focus + .masked-input-toggle {
-  background: rgba($white, 0.95);
+  background: var(--hv-bg-2);
 }

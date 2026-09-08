@@ -7,9 +7,9 @@
 
 .tag:not(body) {
   align-items: center;
-  background-color: $ui-gray-100;
+  background-color: var(--hv-bg-3);
   border-radius: $radius;
-  color: $grey;
+  color: var(--hv-fg-muted);
   display: inline-flex;
   font-size: $size-8;
   font-weight: $font-weight-normal;
@@ -22,7 +22,7 @@
   vertical-align: middle;
 
   code {
-    color: $grey;
+    color: var(--hv-fg-muted);
   }
 
   .icon {
@@ -50,7 +50,7 @@
 
   &.is-outlined {
     background-color: transparent;
-    border: 1px solid $grey-light;
+    border: 1px solid var(--hv-border);
   }
 
   &.is-transparent {

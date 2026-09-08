@@ -4,7 +4,7 @@
  */
 
 .selectable-card {
-  box-shadow: 0 0 0 1px rgba($grey-dark, 0.3);
+  box-shadow: 0 0 0 1px var(--hv-border);
   display: flex;
   justify-content: space-between;
   padding: $spacing-l 0 $spacing-l $spacing-l;
@@ -26,7 +26,7 @@
 
   &:hover {
     box-shadow:
-      0 0 0 1px $grey-light,
+      0 0 0 1px var(--hv-border-strong),
       $box-shadow-middle;
   }
 
@@ -36,7 +36,7 @@
 
   .button {
     &:disabled {
-      border-color: $ui-gray-300;
+      border-color: var(--hv-border);
     }
   }
 
@@ -56,7 +56,7 @@
     grid-template-rows: 1fr 1fr;
 
     .hs-icon {
-      color: $grey-light;
+      color: var(--hv-fg-muted);
       align-self: center;
       justify-self: right;
     }
@@ -82,7 +82,7 @@
   }
 
   .title-number {
-    color: $black;
+    color: var(--hv-fg);
     font-size: 36px;
     font-weight: 500;
     line-height: 1.33;

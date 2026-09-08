@@ -19,7 +19,7 @@
   path {
     animation: openbao-loading-animation 1.3s infinite ease-in-out;
     transform-origin: 50% 50%;
-    fill: #dce2e9;
+    fill: var(--hv-violet-glow);
   }
 
   .openbao-loading-order-1 {

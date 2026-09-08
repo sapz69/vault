@@ -43,7 +43,7 @@
   z-index: -1;
 
   &::after {
-    background: $white;
+    background: var(--hv-bg-2);
     bottom: $spacing-xxs;
     content: '';
     left: $spacing-xxs + $spacing-l;
@@ -62,7 +62,7 @@
 }
 
 div > .ember-power-select-options {
-  background: $white;
+  background: var(--hv-bg-2);
   border: $base-border;
   box-shadow: $box-shadow-middle;
   margin: -4px $spacing-xs 0;
@@ -76,12 +76,12 @@ div > .ember-power-select-options {
   }
 
   .ember-power-select-option[aria-current='true'] {
-    background-color: $ui-gray-050;
-    color: $ui-gray-900;
+    background-color: var(--hv-bg-3);
+    color: var(--hv-fg);
   }
 
   .ember-power-select-option--no-matches-message {
-    color: $grey;
+    color: var(--hv-fg-muted);
     font-size: $size-8;
     font-weight: $font-weight-semibold;
     text-transform: uppercase;
@@ -89,7 +89,7 @@ div > .ember-power-select-options {
     &:hover,
     &:focus {
       background: transparent;
-      color: $grey;
+      color: var(--hv-fg-muted);
     }
   }
 }
@@ -102,7 +102,7 @@ div > .ember-power-select-options {
   border-bottom: $light-border;
 
   .control .button {
-    color: $grey-light;
+    color: var(--hv-fg-muted);
     min-width: auto;
 
     &:hover,
@@ -113,7 +113,7 @@ div > .ember-power-select-options {
 }
 
 .search-select-list-key {
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-size: $size-8;
 }
 

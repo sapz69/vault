@@ -12,6 +12,10 @@
     <meta http-equiv="pragma" content="no-cache" />
     <title>Himitsu Vault</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0A0A0B" />
+
+    {{! Inter / JetBrains Mono are self-hosted in public/fonts and loaded via app.scss @font-face rules — }}
+    {{! the app's CSP (config/content-security-policy.js) only allows style-src 'self', so no external font stylesheets here. }}
 
     {{content-for "head"}}
 

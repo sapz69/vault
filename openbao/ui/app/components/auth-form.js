@@ -167,7 +167,7 @@ export default Component.extend(DEFAULTS, {
     return this.csp.connectionViolations[0];
   }),
 
-  cspErrorText: `This is a standby OpenBao node but can't communicate with the active node via request forwarding. Sign in at the active node to use the OpenBao UI.`,
+  cspErrorText: `This is a standby Himitsu Vault node but can't communicate with the active node via request forwarding. Sign in at the active node to use the Himitsu Vault UI.`,
 
   allSupportedMethods: computed('methodsToShow', 'hasMethodsWithPath', function () {
     const hasMethodsWithPath = this.hasMethodsWithPath;

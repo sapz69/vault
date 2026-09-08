@@ -4,12 +4,12 @@
  */
 
 .namespace-reminder {
-  color: $grey;
+  color: var(--hv-fg-muted);
   margin: 0 0 $size-6 0;
 }
 
 .console-reminder p.namespace-reminder {
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-family: $family-monospace;
   font-size: $size-8;
   margin: $spacing-xxs 0 0;
@@ -17,7 +17,7 @@
   position: absolute;
 
   .tag {
-    background-color: $ui-gray-800;
+    background-color: var(--hv-bg-3);
     color: $light-grey;
     font-size: $size-9;
   }

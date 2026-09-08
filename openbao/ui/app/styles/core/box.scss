@@ -4,10 +4,10 @@
  */
 
 .box {
-  background-color: $white;
+  background-color: var(--hv-bg-2);
   border-radius: 0;
-  box-shadow: 0 0 0 1px rgba($grey-dark, 0.3);
-  color: $ui-gray-900;
+  box-shadow: 0 0 0 1px var(--hv-border);
+  color: var(--hv-fg);
   display: block;
   padding: $size-5;
 

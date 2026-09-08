@@ -4,7 +4,7 @@
  */
 
 .info-table-row {
-  box-shadow: 0 1px 0 $grey-light;
+  box-shadow: 0 1px 0 var(--hv-border);
   margin: 0;
 
   &.has-no-shadow {
@@ -17,8 +17,8 @@
 
   &.thead {
     box-shadow:
-      0 1px 0 $grey-light,
-      0 -1px 0 $grey-light;
+      0 1px 0 var(--hv-border),
+      0 -1px 0 var(--hv-border);
     margin: 0;
     padding: 0 $size-6 0 0;
 
@@ -58,7 +58,7 @@
   }
 
   .icon-false {
-    color: $ui-gray-300;
+    color: var(--hv-fg-subtle);
   }
 
   a {
@@ -91,7 +91,7 @@
 .info-table-row-header {
   margin: 0;
   font-size: $size-8;
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-weight: $font-weight-semibold;
 
   @include until($mobile) {

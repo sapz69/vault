@@ -4,10 +4,10 @@
  */
 
 .visual-diff {
-  background-color: black;
+  background-color: var(--hv-bg-2);
 
   pre {
-    color: $ui-gray-010;
+    color: var(--hv-fg);
   }
 }
 
@@ -25,5 +25,5 @@
 }
 
 .jsondiffpatch-property-name {
-  color: $ui-gray-300;
+  color: var(--hv-fg-muted);
 }

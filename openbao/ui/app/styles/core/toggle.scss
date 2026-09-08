@@ -43,7 +43,7 @@
   height: 1.5rem;
   border: 0.1rem solid transparent;
   border-radius: 0.75rem;
-  background: $ui-gray-300;
+  background: var(--hv-border-strong);
   content: '';
 }
 .toggle[type='checkbox'] + label::after {
@@ -55,12 +55,12 @@
   height: 1rem;
   transform: translate3d(0, 0, 0);
   border-radius: 50%;
-  background: $white;
+  background: var(--hv-fg);
   transition: all 0.25s $easing;
   content: '';
 }
 .toggle[type='checkbox']:checked + label::before {
-  background: $ui-gray-700;
+  background: var(--hv-fg-subtle);
 }
 .toggle[type='checkbox']:checked + label::after {
   left: 1.625rem;

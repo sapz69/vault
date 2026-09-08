@@ -30,7 +30,7 @@
 .radio[disabled],
 .checkbox input[disabled],
 .radio input[disabled] {
-  color: $grey;
+  color: var(--hv-fg-subtle);
   cursor: not-allowed;
 }
 
@@ -41,7 +41,7 @@
 
 // one-off checkbox class
 .checkbox-help-text {
-  color: $ui-gray-700;
+  color: var(--hv-fg-muted);
   font-size: $size-7;
   padding-left: 28px;
 }
@@ -52,9 +52,9 @@
 }
 
 .b-checkbox label::before {
-  background-color: $white;
+  background-color: var(--hv-bg-2);
   border-radius: 3px;
-  border: 1px solid $ui-gray-300;
+  border: 1px solid var(--hv-border);
   content: '';
   height: 17px;
   left: 0;
@@ -85,7 +85,7 @@
 }
 
 .b-checkbox label::after {
-  color: $ui-gray-800;
+  color: var(--hv-fg);
   font-size: 12px;
   height: 16px;
   left: 3px;
@@ -110,7 +110,7 @@
 
 .b-checkbox input[type='checkbox']:disabled + label::before,
 .b-checkbox input[type='radio']:disabled + label::before {
-  background-color: $ui-gray-100;
+  background-color: var(--hv-bg-3);
   cursor: not-allowed;
 }
 

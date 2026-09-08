@@ -19,7 +19,7 @@
   word-break: break-word;
 
   > a {
-    color: $black;
+    color: var(--hv-fg);
     text-decoration: none;
   }
 
@@ -56,5 +56,5 @@
 .is-subtitle-gray {
   text-transform: uppercase;
   font-size: $size-7;
-  color: $ui-gray-500;
+  color: var(--hv-fg-muted);
 }

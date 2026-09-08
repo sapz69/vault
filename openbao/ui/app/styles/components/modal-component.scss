@@ -21,7 +21,7 @@
 }
 
 .modal-background {
-  background: $ui-gray-100;
+  background: var(--hv-bg);
   bottom: 0;
   left: 0;
   opacity: 0.9;
@@ -32,7 +32,7 @@
 
 .modal-card {
   box-shadow: $box-shadow-highest;
-  border: 1px solid $grey-light;
+  border: 1px solid var(--hv-border);
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 70px);
@@ -43,8 +43,8 @@
 
   &-head {
     border-radius: 0;
-    background-color: $grey-lightest;
-    border-bottom: 1px solid $grey-light;
+    background-color: var(--hv-bg-2);
+    border-bottom: 1px solid var(--hv-border);
     display: flex;
     justify-content: flex-start;
     padding: 20px;
@@ -53,7 +53,7 @@
   &-foot {
     border-radius: 0;
     border: 0;
-    background-color: $white;
+    background-color: var(--hv-bg-2);
     padding: 20px;
 
     .button:not(:last-child) {
@@ -67,7 +67,7 @@
   }
 
   .copy-text {
-    background-color: $grey-lightest;
+    background-color: var(--hv-bg-3);
     padding: $spacing-s;
     margin-bottom: $spacing-s;
 
@@ -89,7 +89,7 @@
 }
 
 .modal-card-body {
-  background-color: $white;
+  background-color: var(--hv-bg-2);
   flex-grow: 1;
   flex-shrink: 1;
   overflow: auto;
@@ -115,7 +115,7 @@ pre {
 }
 
 .modal-card-foot-outlined {
-  background: $ui-gray-050;
+  background: var(--hv-bg-3);
   border-top: $base-border;
 }
 
@@ -135,7 +135,7 @@ pre {
 
 // customize spacing (.modal-card-body is restricted to padding: 20px)
 .modal-card-custom {
-  background-color: white;
+  background-color: var(--hv-bg-2);
   flex-grow: 1;
   flex-shrink: 1;
   overflow: auto;

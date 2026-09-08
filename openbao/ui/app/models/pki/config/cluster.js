@@ -27,7 +27,7 @@ export default class PkiConfigClusterModel extends Model {
   @attr('string', {
     label: 'AIA path',
     subText:
-      "Specifies the path to this performance replication cluster's AIA distribution point; may refer to an external, non-OpenBao responder.",
+      "Specifies the path to this performance replication cluster's AIA distribution point; may refer to an external responder outside of Himitsu Vault.",
   })
   aiaPath;
 

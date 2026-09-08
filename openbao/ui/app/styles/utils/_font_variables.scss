@@ -6,6 +6,7 @@
 // Vars relating to font-family or font-weight.
 
 $family-sans:
+  'Inter',
   system-ui,
   -apple-system,
   BlinkMacSystemFont,
@@ -19,7 +20,14 @@ $family-sans:
   'Helvetica Neue',
   sans-serif;
 
-$family-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+$family-monospace:
+  'JetBrains Mono',
+  'SFMono-Regular',
+  Consolas,
+  'Liberation Mono',
+  Menlo,
+  Courier,
+  monospace;
 
 /* Font weight */
 $font-weight-normal: 400;

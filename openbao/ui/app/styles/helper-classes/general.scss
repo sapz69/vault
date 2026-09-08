@@ -8,8 +8,8 @@
 // box-shadow helpers
 .has-only-top-shadow {
   box-shadow:
-    0 -1px 0 -1px $grey-light,
-    0 -2px 0 -1px $grey-light;
+    0 -1px 0 -1px var(--hv-border),
+    0 -2px 0 -1px var(--hv-border);
 }
 
 .has-bottom-shadow {
@@ -22,18 +22,18 @@
 
 .is-sideless {
   box-shadow:
-    0 2px 0 -1px $grey-light,
-    0 -2px 0 -1px $grey-light;
+    0 2px 0 -1px var(--hv-border),
+    0 -2px 0 -1px var(--hv-border);
 }
 
 // this helper needs to go after is-sideless as they are often used together and is-bottomless needs to override is-sideless (no this is not ideal).
 .is-bottomless {
-  box-shadow: 0 -1px 0 0 $grey-light;
+  box-shadow: 0 -1px 0 0 var(--hv-border);
 }
 
 // border helpers
 .has-default-border {
-  border: 1px solid $grey !important;
+  border: 1px solid var(--hv-border) !important;
 }
 
 .is-borderless {
@@ -63,13 +63,13 @@
 
 // large grouped css blocks
 .is-hint {
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-size: $size-8;
   padding: $size-8 0;
 }
 
 .is-optional {
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-size: $size-8;
   text-transform: lowercase;
 }

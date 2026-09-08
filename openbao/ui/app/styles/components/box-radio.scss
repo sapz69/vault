@@ -9,7 +9,7 @@
 }
 .title.box-radio-header {
   font-size: $size-6;
-  color: $grey;
+  color: var(--hv-fg-muted);
   margin: $size-7 0 0 0;
 }
 .box-radio-spacing {
@@ -28,7 +28,7 @@
   border-radius: $radius;
   box-shadow: $box-shadow;
   text-align: center;
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-weight: $font-weight-semibold;
   line-height: 1;
   margin: $size-6 $size-3 $size-6 0;
@@ -38,7 +38,7 @@
 
   &.is-selected {
     box-shadow:
-      0 0 0 1px $grey-light,
+      0 0 0 1px var(--hv-border),
       $box-shadow-middle;
   }
 
@@ -47,7 +47,7 @@
   }
 
   input[type='radio'].radio + label {
-    border: 1px solid $grey-light;
+    border: 1px solid var(--hv-border);
     border-radius: 50%;
     cursor: pointer;
     display: block;

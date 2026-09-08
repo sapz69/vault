@@ -6,7 +6,7 @@
 .feature-header {
   font-size: $size-6;
   font-weight: $font-weight-semibold;
-  color: $grey;
+  color: var(--hv-fg-muted);
 }
 
 .access-information {
@@ -22,12 +22,12 @@
   margin: $size-8 0;
 
   &.is-active {
-    box-shadow: 0 0 0 1px $grey-light;
+    box-shadow: 0 0 0 1px var(--hv-border);
   }
 
   &.is-disabled {
-    background-color: $ui-gray-010;
-    color: $ui-gray-300;
+    background-color: var(--hv-bg-3);
+    color: var(--hv-fg-subtle);
   }
 }
 
@@ -46,7 +46,7 @@
 
 .feature-steps {
   font-size: $size-8;
-  color: $grey;
+  color: var(--hv-fg-muted);
   line-height: 1.5;
   margin-left: $size-3;
   margin-top: $size-10;

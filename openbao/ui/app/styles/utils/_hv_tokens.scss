@@ -1,0 +1,23 @@
+/**
+ * Himitsu Vault design tokens.
+ * Source of truth: frontend/src/styles/index.css and frontend/tailwind.config.js
+ */
+
+:root {
+  --hv-bg: #0a0a0b;
+  --hv-bg-1: #111114;
+  --hv-bg-2: #19191d;
+  --hv-bg-3: #232328;
+  --hv-border: #2d2d33;
+  --hv-border-strong: #3f3f46;
+  --hv-fg: #fafaf7;
+  --hv-fg-muted: #a1a1aa;
+  --hv-fg-subtle: #6b6b72;
+  --hv-violet: #7c3aed;
+  --hv-violet-glow: #a78bfa;
+  --hv-violet-soft: #2a1f4a;
+  --hv-success: #4ade80;
+  --hv-warn: #fcd34d;
+  --hv-danger: #f87171;
+  --hv-mint: #6ee7b7;
+}

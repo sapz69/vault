@@ -9,11 +9,11 @@ select {
 }
 
 .select select {
-  background-color: $ui-gray-050;
-  box-shadow: 0 3px 1px rgba($black, 0.12);
-  border: 1px solid $grey-light;
+  background-color: var(--hv-bg-2);
+  box-shadow: 0 3px 1px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--hv-border);
   border-radius: $radius;
-  color: $grey-dark;
+  color: var(--hv-fg);
   cursor: pointer;
   display: block;
   font-size: 1em;
@@ -39,7 +39,7 @@ select {
   &:focus-visible,
   &.is-active {
     border-color: $blue-500;
-    box-shadow: 0 0 0 0.125em rgba(21, 99, 255, 0.25);
+    box-shadow: 0 0 0 0.125em rgba(124, 58, 237, 0.25);
   }
 }
 
@@ -48,13 +48,13 @@ select {
 }
 
 .select select[disabled] {
-  border-color: $grey-light;
-  background-color: $ui-gray-100;
-  color: $ui-gray-500;
+  border-color: var(--hv-border);
+  background-color: var(--hv-bg-3);
+  color: var(--hv-fg-subtle);
   cursor: not-allowed;
   user-select: none;
   &:hover {
-    border-color: $grey-light;
+    border-color: var(--hv-border);
   }
 }
 

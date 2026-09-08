@@ -6,12 +6,12 @@
 
 .button {
   align-items: center;
-  background-color: $grey-lightest;
-  border: 1px solid $grey-light;
+  background-color: var(--hv-bg-2);
+  border: 1px solid var(--hv-border);
   border-radius: $radius;
   box-shadow: $box-shadow-low;
   cursor: pointer;
-  color: $ui-gray-800;
+  color: var(--hv-fg);
   display: inline-block;
   font-size: $size-8;
   font-weight: $font-weight-semibold;
@@ -43,18 +43,18 @@
   &:active,
   &.is-active,
   &:focus {
-    border-color: color.adjust($grey-light, $lightness: -10%, $space: hsl);
+    border-color: var(--hv-border-strong);
     box-shadow: $button-box-shadow-standard;
-    color: color.adjust($grey-dark, $lightness: -10%, $space: hsl);
+    color: var(--hv-fg);
   }
 
   &:focus:not(:active) {
-    box-shadow: 0 0 0 0.125em rgba(21, 99, 255, 0.25);
+    box-shadow: 0 0 0 0.125em rgba(124, 58, 237, 0.25);
   }
 
   &:disabled {
-    background-color: $white;
-    border-color: $ui-gray-050;
+    background-color: var(--hv-bg-3);
+    border-color: var(--hv-border);
     box-shadow: none;
     cursor: not-allowed;
     opacity: 0.5;
@@ -112,7 +112,7 @@
 
     &:hover {
       color: $blue-500;
-      background-color: $grey-lightest;
+      background-color: var(--hv-bg-2);
     }
   }
 
@@ -125,7 +125,7 @@
     pointer-events: none;
     &::after {
       animation: spinAround 500ms infinite linear;
-      border: 2px solid $ui-gray-300;
+      border: 2px solid var(--hv-border-strong);
       border-radius: 290486px;
       border-right-color: transparent;
       border-top-color: transparent;
@@ -157,7 +157,7 @@
     text-shadow: 0 1px 1px rgba($black, 0.25);
 
     &:disabled {
-      background-color: $ui-gray-700;
+      background-color: var(--hv-bg-3);
       border-color: transparent;
       box-shadow: none;
     }
@@ -216,9 +216,9 @@
 
     &.is-outlined [disabled] {
       background-color: transparent;
-      border-color: $ui-gray-700;
+      border-color: var(--hv-border-strong);
       box-shadow: none;
-      color: $ui-gray-700;
+      color: var(--hv-fg-subtle);
     }
   }
 
@@ -233,7 +233,7 @@
   // End of button types
 
   &.tool-tip-trigger {
-    color: $grey-dark;
+    color: var(--hv-fg-muted);
     min-width: auto;
     padding: 0;
   }
@@ -287,8 +287,8 @@
 }
 
 .button.next-feature-step {
-  background: $white;
-  border: 1px solid $grey-light;
+  background: var(--hv-bg-2);
+  border: 1px solid var(--hv-border);
   border-radius: $radius;
   box-shadow: none;
   color: $blue;
@@ -304,7 +304,7 @@
 
 a.button.disabled {
   color: $white;
-  background-color: $grey-dark;
+  background-color: var(--hv-bg-3);
   opacity: 0.5;
   border-color: transparent;
   box-shadow: none;

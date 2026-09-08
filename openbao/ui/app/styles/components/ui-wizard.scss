@@ -34,7 +34,7 @@
   z-index: 300;
   padding: $size-5;
   width: $drawer-width;
-  background: $white;
+  background: var(--hv-bg-2);
   box-shadow: $box-shadow, $box-shadow-highest;
   position: fixed;
   right: $size-8;
@@ -50,14 +50,14 @@
     position: absolute;
     top: $size-8;
     right: $size-8;
-    color: $grey;
+    color: var(--hv-fg-muted);
     z-index: 30;
   }
 
   @include until($mobile) {
     box-shadow:
       $box-shadow,
-      0 0 20px rgba($black, 0.24);
+      0 0 20px rgba(0, 0, 0, 0.24);
     bottom: 0;
     left: 0;
     right: 0;
@@ -71,7 +71,7 @@
   }
 
   pre code {
-    background: $ui-gray-050;
+    background: var(--hv-bg-3);
     margin: $size-8 0;
   }
 }
@@ -97,8 +97,8 @@
 
 .ui-wizard.collapsed {
   animation: drop-fade-above $speed-slow;
-  color: $white;
-  background: $black;
+  color: var(--hv-fg);
+  background: var(--hv-bg-1);
   bottom: auto;
   box-shadow: $box-shadow-middle;
   height: auto;
@@ -111,7 +111,7 @@
   @include until($mobile) {
     box-shadow:
       $box-shadow,
-      0 0 20px rgba($black, 0.24);
+      0 0 20px rgba(0, 0, 0, 0.24);
     bottom: 0;
     left: 0;
     right: 0;
@@ -120,7 +120,7 @@
   }
 
   .title {
-    color: $white;
+    color: var(--hv-fg);
   }
 
   .wizard-header {
@@ -131,11 +131,11 @@
 
   .wizard-dismiss-menu {
     svg {
-      color: $white;
+      color: var(--hv-fg);
     }
 
     &:hover svg {
-      color: $black;
+      color: var(--hv-fg-muted);
     }
   }
 }
@@ -145,8 +145,8 @@
   box-shadow: none;
   margin: $size-8 0 0;
   padding: 0 $size-8;
-  border-top: solid 1px $white;
-  border-image: linear-gradient(to right, $grey-dark, $grey) 1;
+  border-top: solid 1px var(--hv-border);
+  border-image: linear-gradient(to right, var(--hv-border-strong), var(--hv-border)) 1;
   border-width: 1px 0 0;
   button {
     font-size: $size-7;
@@ -165,7 +165,7 @@
 .wizard-details {
   padding-top: $size-4;
   margin-top: $size-4;
-  border-top: 1px solid $grey-light;
+  border-top: 1px solid var(--hv-border);
 }
 
 .wizard-instructions {
@@ -181,14 +181,14 @@
 
 .time-estimate {
   align-items: center;
-  color: $grey;
+  color: var(--hv-fg-muted);
   display: flex;
   font-size: 12px;
 }
 
 .progress-container {
   align-items: center;
-  background: $white;
+  background: var(--hv-bg-2);
   bottom: 0;
   height: $wizard-progress-bar-height;
   display: flex;
@@ -201,7 +201,7 @@
 }
 
 .progress-bar {
-  background: $ui-gray-050;
+  background: var(--hv-bg-3);
   box-shadow: inset $box-link-shadow;
   display: flex;
   height: $wizard-progress-bar-height;
@@ -254,7 +254,7 @@
 }
 
 .incomplete-check {
-  color: $ui-gray-200;
+  color: var(--hv-border);
 }
 
 .completed-check {

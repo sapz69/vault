@@ -46,7 +46,7 @@ export default class PkiRoleGenerate extends Component<Args> {
     } catch (err) {
       this.errorBanner = errorMessage(
         err,
-        `Could not ${this.verb} certificate. See OpenBao logs for details.`
+        `Could not ${this.verb} certificate. See Himitsu Vault logs for details.`
       );
       this.invalidFormAlert = 'There was an error submitting this form.';
     }

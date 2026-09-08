@@ -7,26 +7,26 @@
 
 // background colors
 .has-background-white-bis {
-  background: $ui-gray-050;
+  background: var(--hv-bg-2);
 }
 
 .has-background-gray-100 {
-  background-color: $ui-gray-100;
+  background-color: var(--hv-bg-2);
 }
 
 .has-background-gray-200 {
-  background-color: $ui-gray-200;
+  background-color: var(--hv-bg-3);
 }
 
 // borders
 .has-border-top-light {
   border-radius: 0;
-  border-top: 1px solid $grey-light;
+  border-top: 1px solid var(--hv-border);
 }
 
 .has-border-bottom-light {
   border-radius: 0;
-  border-bottom: 1px solid $grey-light;
+  border-bottom: 1px solid var(--hv-border);
 }
 
 .has-error-border,
@@ -41,19 +41,19 @@ select.has-error-border {
 
 // text color
 .has-text-grey-light {
-  color: $ui-gray-300 !important;
+  color: var(--hv-fg-subtle) !important;
 }
 
 .has-text-grey-400 {
-  color: $ui-gray-400;
+  color: var(--hv-fg-subtle);
 }
 
 .has-text-grey {
-  color: $ui-gray-500 !important;
+  color: var(--hv-fg-muted) !important;
 }
 
 .has-text-grey-dark {
-  color: $ui-gray-700 !important;
+  color: var(--hv-fg) !important;
 }
 
 .has-text-white {

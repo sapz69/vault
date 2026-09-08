@@ -5,7 +5,7 @@
 
 .progress {
   appearance: none;
-  background: $ui-gray-050;
+  background: var(--hv-bg-3);
   border: none;
   box-shadow: inset $box-link-shadow;
   border-radius: $radius;
@@ -30,13 +30,13 @@
 
 // style the container in chrome
 .progress[value]::-webkit-progress-bar {
-  background-color: #ededed;
+  background-color: var(--hv-bg-3);
   box-shadow: inset $box-link-shadow;
 }
 
 // style the bar in chrome
 .progress[value]::-webkit-progress-value {
-  background-color: #4a4a4a;
+  background-color: var(--hv-fg-muted);
   border-radius: $radius;
   transition: width 1s $easing;
 }
@@ -48,25 +48,25 @@
 }
 
 .progress::-ms-fill {
-  background-color: #4a4a4a;
+  background-color: var(--hv-fg-muted);
   border: none;
 }
 
 // is-success and is-info are the two types of progress bars we have
 .progress.is-info::-webkit-progress-value {
-  background-color: #3e8ed0;
+  background-color: $blue-500;
 }
 
 .progress.is-info::-moz-progress-bar {
-  background-color: #3e8ed0;
+  background-color: $blue-500;
 }
 
 .progress.is-info::-ms-fill {
-  background-color: #3e8ed0;
+  background-color: $blue-500;
 }
 
 .progress.is-info:indeterminate {
-  background-image: linear-gradient(to right, #3e8ed0 30%, #ededed 30%);
+  background-image: linear-gradient(to right, $blue-500 30%, var(--hv-bg-3) 30%);
 }
 
 .progress.is-success::-webkit-progress-value {
@@ -82,5 +82,5 @@
 }
 
 .progress.is-success:indeterminate {
-  background-image: linear-gradient(to right, $green-500 30%, #ededed 30%);
+  background-image: linear-gradient(to right, $green-500 30%, var(--hv-bg-3) 30%);
 }

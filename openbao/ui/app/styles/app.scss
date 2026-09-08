@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+@import './utils/hv_tokens';
 @import './reset';
 @import 'ember-basic-dropdown';
 @import 'ember-power-select';
@@ -23,14 +24,37 @@
 // We took the font we wanted and moved it into the ui/fonts folder
 @include font-face('text-security-square');
 
+// Self-hosted (CSP forbids third-party style-src, e.g. fonts.googleapis.com / rsms.me)
+@font-face {
+  font-family: 'Inter';
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('/ui/fonts/inter/inter-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/ui/fonts/jetbrains-mono/jetbrains-mono-variable.woff2') format('woff2');
+}
+
 :root {
   /* Sidebar Foreground Colors */
-  --token-side-nav-color-foreground-primary: #ffffff; /* Primary text color */
-  --token-side-nav-color-foreground-strong: #e0f0eb; /* Strong foreground (e.g., active items) */
-  --token-side-nav-color-foreground-faint: #9db7af; /* Faint foreground (e.g., secondary text) */
+  --token-side-nav-color-foreground-primary: var(--hv-fg); /* Primary text color */
+  --token-side-nav-color-foreground-strong: var(--hv-fg); /* Strong foreground (e.g., active items) */
+  --token-side-nav-color-foreground-faint: var(--hv-fg-muted); /* Faint foreground (e.g., secondary text) */
 
   /* Sidebar Background and Interactive Colors */
-  --token-side-nav-color-surface-primary: #336d5c; /* Sidebar primary background */
-  --token-side-nav-color-surface-interactive-hover: #4f8c77; /* Hover state */
-  --token-side-nav-color-surface-interactive-active: #275547; /* Active state */
+  --token-side-nav-color-surface-primary: var(--hv-bg-1); /* Sidebar primary background */
+  --token-side-nav-color-surface-interactive-hover: var(--hv-bg-2); /* Hover state */
+  --token-side-nav-color-surface-interactive-active: var(--hv-violet-soft); /* Active state */
+}
+
+html,
+body {
+  background: var(--hv-bg);
+  color: var(--hv-fg);
 }

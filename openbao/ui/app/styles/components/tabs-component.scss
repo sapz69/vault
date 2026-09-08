@@ -11,7 +11,7 @@
 
 .tabs {
   align-items: stretch;
-  box-shadow: inset 0 -1px 0 $grey-light;
+  box-shadow: inset 0 -1px 0 var(--hv-border);
   display: flex;
   justify-content: space-between;
   overflow: hidden;
@@ -78,7 +78,7 @@
   a,
   .tab {
     border-bottom: 2px solid transparent;
-    color: $grey;
+    color: var(--hv-fg-muted);
     font-weight: $font-weight-semibold;
     padding: $size-6 $size-8 $size-8;
     text-decoration: none;
@@ -88,12 +88,12 @@
 
     &:hover,
     &:active {
-      border-color: $grey-light;
+      border-color: var(--hv-border-strong);
     }
 
     &:hover {
-      background-color: $ui-gray-050;
-      color: $grey-darkest;
+      background-color: var(--hv-bg-3);
+      color: var(--hv-fg);
     }
   }
 

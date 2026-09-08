@@ -5,17 +5,17 @@
 
 .empty-state {
   align-items: center;
-  color: $grey;
-  background: $ui-gray-010;
+  color: var(--hv-fg-muted);
+  background: var(--hv-bg-2);
   display: flex;
   justify-content: center;
   padding: $spacing-xxl $spacing-s;
-  box-shadow: 0 -2px 0 -1px $ui-gray-300;
+  box-shadow: 0 -2px 0 -1px var(--hv-border);
 }
 
 .empty-state-transparent {
   align-items: center;
-  color: $grey;
+  color: var(--hv-fg-muted);
   background: transparent;
   display: flex;
   justify-content: center;
@@ -28,7 +28,7 @@
 }
 
 .empty-state-title {
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-size: $size-4;
   font-weight: $font-weight-semibold;
   line-height: 1.2;

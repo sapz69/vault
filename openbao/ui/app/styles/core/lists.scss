@@ -18,7 +18,7 @@
 
 .list-header {
   margin: $size-9 $size-9 0;
-  color: $grey;
+  color: var(--hv-fg-muted);
   font-size: $size-8;
   font-weight: $font-weight-semibold;
   text-transform: uppercase;

@@ -52,12 +52,12 @@
   .ember-power-select-option,
   .ember-power-select-option[aria-current='true'],
   a {
-    background-color: $white;
-    color: $grey-darkest;
+    background-color: var(--hv-bg-2);
+    color: var(--hv-fg);
 
     &:hover {
-      background-color: $ui-gray-050;
-      color: $ui-gray-900;
+      background-color: var(--hv-bg-3);
+      color: var(--hv-fg);
     }
 
     &.active,
@@ -86,7 +86,7 @@
   }
 
   .menu-label {
-    color: $grey-dark;
+    color: var(--hv-fg-muted);
     font-size: $size-9;
     font-weight: $font-weight-normal;
     letter-spacing: 0;
@@ -100,7 +100,7 @@
   }
 
   hr {
-    background-color: $ui-gray-200;
+    background-color: var(--hv-border);
     margin: 0;
   }
 }

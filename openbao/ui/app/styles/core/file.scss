@@ -43,7 +43,7 @@
 .file-delete-button {
   @extend .button;
   @extend .is-transparent;
-  color: $grey;
+  color: var(--hv-fg-muted);
   position: absolute;
   right: $spacing-xs;
 }

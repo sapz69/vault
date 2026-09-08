@@ -14,7 +14,7 @@
 
 .transit-card {
   border-radius: $radius;
-  box-shadow: 0 0 0 1px rgba($grey-light, 0.4);
+  box-shadow: 0 0 0 1px var(--hv-border);
   display: grid;
   grid-template-columns: 0.45fr 2fr;
   padding: $spacing-m;
@@ -27,11 +27,11 @@
   .transit-action-description {
     font-family: $family-sans;
     font-size: $size-8;
-    color: $grey;
+    color: var(--hv-fg-muted);
   }
 
   .title {
-    color: $grey;
+    color: var(--hv-fg-muted);
     font-size: $size-7;
     margin-bottom: $spacing-xxs;
   }

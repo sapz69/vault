@@ -33,7 +33,7 @@
   .close-button {
     background: transparent;
     border: 0;
-    color: $grey;
+    color: var(--hv-fg-muted);
     cursor: pointer;
     position: absolute;
     right: $spacing-s;

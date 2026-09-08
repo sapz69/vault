@@ -5,7 +5,7 @@
 
 .has-copy-button {
   position: relative;
-  color: $grey;
+  color: var(--hv-fg-muted);
 }
 .hover-copy-button,
 .hover-copy-button-static {

@@ -8,8 +8,9 @@ import { Factory } from 'miragejs';
 export default Factory.extend({
   openapi: '3.0.2',
   info: {
-    title: 'HashiCorp OpenBao API',
-    description: 'HTTP API that gives you full access to OpenBao. All API routes are prefixed with `/v1/`.',
+    title: 'Himitsu Vault API',
+    description:
+      'HTTP API that gives you full access to Himitsu Vault. All API routes are prefixed with `/v1/`.',
     version: '1.0.0',
     license: {
       name: 'Mozilla Public License 2.0',

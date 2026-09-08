@@ -31,12 +31,12 @@
       height: $size-4;
       border: 0.1rem solid transparent;
       border-radius: $radius-large;
-      background: $ui-gray-300;
+      background: var(--hv-border-strong);
       content: '';
     }
 
     &::after {
-      background: $white;
+      background: var(--hv-fg);
       border-radius: $radius-large;
       content: '';
       display: block;
@@ -90,7 +90,7 @@
     &::before {
       border: 0.1rem solid transparent;
       border-radius: $radius-large;
-      background: $ui-gray-300;
+      background: var(--hv-border-strong);
       display: block;
       content: '';
       height: $size-8;
@@ -99,7 +99,7 @@
       width: $size-8 * 2;
     }
     &::after {
-      background: $white;
+      background: var(--hv-fg);
       border-radius: $radius-large;
       content: '';
       display: block;

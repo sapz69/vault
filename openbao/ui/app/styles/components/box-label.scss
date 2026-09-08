@@ -11,7 +11,7 @@ label.box-label {
   @extend .box;
   @extend .is-centered;
 
-  border-color: $grey-light;
+  border-color: var(--hv-border);
   border-radius: 3px;
   box-shadow: $box-link-shadow;
   text-decoration: none;
@@ -30,12 +30,12 @@ label.box-label {
     box-shadow: $box-link-hover-shadow, $box-shadow-middle;
 
     .icon {
-      color: $grey;
+      color: var(--hv-fg-muted);
     }
   }
 
   .icon {
-    color: $grey-light;
+    color: var(--hv-fg-subtle);
   }
 
   input[type='radio'] {
@@ -43,7 +43,7 @@ label.box-label {
   }
 
   input[type='radio'] + label {
-    border: 1px solid $grey-light;
+    border: 1px solid var(--hv-border);
     border-radius: 50%;
     cursor: pointer;
     display: block;
@@ -60,9 +60,9 @@ label.box-label {
 }
 
 .box-label-header {
-  color: $grey;
+  color: var(--hv-fg-muted);
 
   .is-selected & {
-    color: $grey-darkest;
+    color: var(--hv-fg);
   }
 }

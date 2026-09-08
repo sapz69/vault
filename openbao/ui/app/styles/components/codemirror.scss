@@ -37,9 +37,9 @@ $gutter-grey: #2a2f36;
 
 .cm-s-hashi-read-only {
   &.CodeMirror {
-    background-color: $grey-lightest;
+    background-color: var(--hv-bg-2);
     border: none;
-    color: $ui-gray-600;
+    color: var(--hv-fg-muted);
     font-family: $family-monospace;
     -webkit-font-smoothing: auto;
     line-height: 1.4;
@@ -56,7 +56,7 @@ $gutter-grey: #2a2f36;
 
 .cm-s-hashi {
   &.CodeMirror {
-    background-color: $black !important;
+    background-color: var(--hv-bg-2) !important;
     resize: vertical;
     color: #cfd2d1 !important;
     border: none;

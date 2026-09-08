@@ -10,8 +10,8 @@
   align-items: center;
   border-radius: $radius;
   border: $base-border;
-  box-shadow: 0 4px 1px rgba($black, 0.06) inset;
-  color: $grey-dark;
+  box-shadow: 0 4px 1px rgba(0, 0, 0, 0.2) inset;
+  color: var(--hv-fg);
   display: inline-flex;
   font-size: $size-6;
   height: $size-2;
@@ -28,13 +28,13 @@
   &.is-active,
   &:focus-visible {
     outline: none;
-    background-color: $white;
+    background-color: var(--hv-bg-2);
     border-color: $blue-500 !important;
-    box-shadow: 0 0 0 0.125em rgba(21, 99, 255, 0.25);
+    box-shadow: 0 0 0 0.125em rgba(124, 58, 237, 0.25);
   }
 
   &:hover {
-    border-color: $ui-gray-300;
+    border-color: var(--hv-border);
   }
 
   @include until($desktop) {
@@ -48,13 +48,13 @@
 
 .input[disabled],
 .textarea[disabled] {
-  border-color: $grey-light;
-  background-color: $ui-gray-100;
-  color: $ui-gray-500;
+  border-color: var(--hv-border);
+  background-color: var(--hv-bg-3);
+  color: var(--hv-fg-subtle);
   cursor: not-allowed;
 
   &:hover {
-    border-color: $grey-light;
+    border-color: var(--hv-border);
   }
 }
 
@@ -79,5 +79,5 @@
 .input-hint {
   padding: 0 $size-9;
   font-size: $size-8;
-  color: $grey;
+  color: var(--hv-fg-muted);
 }

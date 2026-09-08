@@ -19,7 +19,7 @@
     margin-left: auto;
     font-size: $size-8;
     font-weight: $font-weight-semibold;
-    color: $ui-gray-500;
+    color: var(--hv-fg-muted);
   }
 
   .center-display {
@@ -50,8 +50,8 @@ a.list-item-row,
     padding-right: $size-9;
     position: relative;
     box-shadow:
-      0 2px 0 -1px $grey-light,
-      0 -2px 0 -1px $grey-light,
+      0 2px 0 -1px var(--hv-border),
+      0 -2px 0 -1px var(--hv-border),
       $box-link-hover-shadow,
       $box-shadow-middle;
   }

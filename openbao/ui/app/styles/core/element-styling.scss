@@ -31,7 +31,7 @@ body,
 pre,
 strong,
 table th {
-  color: $ui-gray-900;
+  color: var(--hv-fg);
 }
 
 h1,
@@ -74,7 +74,7 @@ object {
 }
 
 html {
-  background-color: $white;
+  background-color: var(--hv-bg);
   font-size: 14px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -134,19 +134,19 @@ a {
 }
 
 a:hover {
-  color: $ui-gray-900;
+  color: var(--hv-fg);
 }
 
 code {
   background-color: transparent;
-  color: $ui-gray-700;
+  color: var(--hv-fg-muted);
   font-size: 1em;
   font-weight: 400;
   padding: 0;
 }
 
 hr {
-  background-color: $ui-gray-300;
+  background-color: var(--hv-border);
   border: none;
   display: block;
   height: 1px;

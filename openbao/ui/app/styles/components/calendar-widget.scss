@@ -47,14 +47,14 @@ $dark-gray: #535f73;
 
   > button {
     &.is-month-list {
-      background-color: $white;
-      color: black;
+      background-color: var(--hv-bg-2);
+      color: var(--hv-fg);
       text-align: center;
       border: $light-border;
       border-radius: $radius;
     }
     &.is-current-month {
-      border: 1px solid $ui-gray-900;
+      border: 1px solid var(--hv-border-strong);
     }
     &:hover {
       background-color: color.adjust($dark-gray, $lightness: 30%, $space: hsl);
@@ -63,7 +63,7 @@ $dark-gray: #535f73;
       cursor: pointer;
     }
     &.is-readOnly {
-      background-color: $ui-gray-100;
+      background-color: var(--hv-bg-3);
       color: color.adjust($dark-gray, $lightness: 30%, $space: hsl);
       pointer-events: none;
     }
@@ -72,7 +72,7 @@ $dark-gray: #535f73;
 
 .border-col {
   grid-area: border-col;
-  background-color: $ui-gray-200;
+  background-color: var(--hv-border);
 }
 
 .calendar-widget-container {
@@ -83,7 +83,7 @@ $dark-gray: #535f73;
   grid-template-columns: 1fr;
   grid-template-rows: 0.7fr 3fr;
   box-shadow: $box-shadow, $box-shadow-middle;
-  background-color: white;
+  background-color: var(--hv-bg-2);
   border-radius: $radius;
 }
 
@@ -97,8 +97,8 @@ $dark-gray: #535f73;
 
 // for modal-dialog tooltips
 .calendar-tooltip {
-  background-color: $ui-gray-700;
-  color: $white;
+  background-color: var(--hv-bg-3);
+  color: var(--hv-fg);
   font-size: $size-8;
   padding: $size-9;
   border-radius: $radius-large;

@@ -16,10 +16,10 @@
 .regex-group {
   font-family: $family-monospace;
   font-size: $size-8;
-  color: $ui-gray-600;
+  color: var(--hv-fg-muted);
 }
 .regex-group-position {
-  background-color: $ui-gray-200;
+  background-color: var(--hv-border);
   border-radius: 3px;
   padding-top: 5px;
   padding-bottom: 4px;

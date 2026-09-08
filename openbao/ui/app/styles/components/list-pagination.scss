@@ -54,7 +54,7 @@
   @extend .has-slim-padding;
   position: relative;
   top: 1px;
-  background-color: $grey-lightest;
+  background-color: var(--hv-bg-2);
   margin-bottom: $size-4;
 
   a {
@@ -71,7 +71,7 @@
     color: $blue;
   }
   a.is-current {
-    background-color: $grey;
+    background-color: var(--hv-violet-soft);
   }
   .pagination {
     justify-content: center;
@@ -105,7 +105,7 @@
   @extend .is-primary;
   @extend .is-outlined;
   @extend .is-compact;
-  background: $white;
+  background: var(--hv-bg-2);
   border-color: $blue-500;
   color: $blue-500;
   max-width: 8rem;

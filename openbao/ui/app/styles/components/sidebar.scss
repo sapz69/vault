@@ -8,7 +8,7 @@
 
   .popup-menu-content {
     .menu-label {
-      color: $black;
+      color: var(--hv-fg);
       font-size: 14px;
       font-weight: $font-weight-bold;
       text-transform: unset;
@@ -21,7 +21,7 @@
   .confirm-action-message p {
     padding-top: $size-10;
     font-weight: $font-weight-semibold;
-    color: $black;
+    color: var(--hv-fg);
   }
 }
 
