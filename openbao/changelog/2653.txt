@@ -1,0 +1,3 @@
+```release-note:improvement
+ui: Update EmberJS to 4.12 LTS.
+```

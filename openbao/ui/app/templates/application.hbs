@@ -1,0 +1,5 @@
+<Sidebar::Frame @showSidebar={{if (and this.auth.isActiveSession this.currentCluster.cluster.name) true false}}>
+  <div class="page-container">
+    {{outlet}}
+  </div>
+</Sidebar::Frame>

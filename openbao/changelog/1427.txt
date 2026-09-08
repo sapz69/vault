@@ -1,0 +1,3 @@
+```release-note:feature
+**HSM Release Artifacts**: Add ARM64 HSM builds and Alpine-based HSM container images
+```

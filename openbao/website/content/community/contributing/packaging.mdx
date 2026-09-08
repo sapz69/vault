@@ -1,0 +1,104 @@
+---
+description: |-
+  Packaging OpenBao for distribution
+---
+
+# Packaging guide
+
+:::warning
+
+The scripts in the `Makefile` are for development only. They do not constitute
+a stable or supported interface for release builds. They often make
+assumptions true in development environments (such as having a full Git tree
+available) that may not be true in release build environments.
+
+If you use those interfaces for release builds, you do so at your own risk.
+
+:::
+
+## Suggested dependencies
+
+ - NodeJS, and PNPM for building the UI.
+ - Go toolchain for building the server.
+
+For version information, refer to our release process. The Go toolchain
+version used by this project is documented in the `/.go-version` file.
+
+## UI Release
+
+To build a release version of the UI:
+
+```
+# UI must be built from the UI directory.
+cd ui/
+
+# Install dependencies via pnpm.
+pnpm install --frozen-lockfile
+
+# Perform the release build via pnpm.
+pnpm build
+```
+
+This creates a directory, `/internal/http/web_ui`, which contains the output of the
+build.
+
+## Go binary
+
+### Required ldflags
+
+To build a release binary, define the following variables via [linker flag variable
+definitions](https://pkg.go.dev/cmd/link) as appropriate:
+
+| Parameter | Value |
+| :-------- | :---- |
+| `github.com/openbao/openbao/v2/internal/version.fullVersion` | Version number of OpenBao; typically this matches the upstream version. Must be semver (`<major>.<minor>.<patch>`). Required. |
+| `github.com/openbao/openbao/v2/internal/version.GitCommit` | Git commit for reference; string. Required. |
+| `github.com/openbao/openbao/v2/internal/version.CommitDate` | Date of the commit in the format `%Y-%m-%dT%H:%M:%SZ` (UTC). Not the date of the build to preserve reproducibility. Required. |
+| `github.com/openbao/openbao/v2/internal/version.VersionMetadata` | Custom version information; string. Optional. |
+
+### Known tags
+
+The following tags are known:
+
+| Tag   | Effect |
+| :---- | :----- |
+| `ui`  | Enables bundling of the WebUI into the release. |
+
+:::warning
+
+The following flags **SHOULD NOT** be used in a release version:
+
+| Tag | Effect |
+| :-- | :----- |
+| `deadlock`    | Includes deadlock detection during testing.                                   |
+| `memprofiler` | Includes a memory profiler in the release binary for debugging purposes only. |
+| `race`        | Enabled for race testing.                                                     |
+| `tlsdebug`    | Enables TLS session key dumping, e.g. for debugging with Wireshark.           |
+
+:::
+
+### CGo
+
+CGo can be enabled on any platform but has no effect on most as OpenBao is
+generally built as a static binary. Occasionally, the Go toolchain will
+change its behavior on various platforms if CGo is enabled.
+
+### Building
+
+For instance, our upstream release invokes Go as follows:
+
+```
+CGO_ENABLED=0 go build \
+ -ldflags "-X github.com/openbao/openbao/v2/internal/version.fullVersion=v2.1.0 -X github.com/openbao/openbao/v2/internal/version.GitCommit=93609bf0c73a18dd81ac8c7d21b95cbde1e4887c -X github.com/openbao/openbao/v2/internal/version.CommitDate=2024-11-29T15:34:50Z"
+ .
+```
+
+### Linux package scripts
+
+Other scripts for Linux packaging are available under the `.release/linux`
+directory.
+
+### Container images
+
+Our container images use the binary directly with the containerfile at
+`/Dockerfile`. The entrypoint used is available under `.release/docker/`.

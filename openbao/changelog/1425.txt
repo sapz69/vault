@@ -1,0 +1,3 @@
+```release-note:feature
+**Static Key Auto-unseal**: The static key unseal mechanism allows for auto-unseal in environments with explicit trust chaining.
+```

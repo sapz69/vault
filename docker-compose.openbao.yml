@@ -1,0 +1,36 @@
+services:
+  openbao:
+    build:
+      context: .
+      dockerfile: Dockerfile.openbao
+    container_name: himitsu-vault-openbao
+    ports:
+      - "${OPENBAO_HOST_PORT:-8210}:8200"
+    volumes:
+      - openbao-file:/openbao/file
+      - openbao-logs:/openbao/logs
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - BAO_ADDR=http://0.0.0.0:8200
+      - BAO_API_ADDR=${OPENBAO_API_ADDR:-http://127.0.0.1:8210}
+      - HIMITSU_UNSEAL_KEY=${HIMITSU_UNSEAL_KEY}
+      - HIMITSU_ADMIN_USERNAME=${HIMITSU_ADMIN_USERNAME}
+      - HIMITSU_ADMIN_PASSWORD=${HIMITSU_ADMIN_PASSWORD}
+    command: server -config=/openbao/config/openbao.hcl
+    restart: unless-stopped
+
+  ui-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui-dev
+    container_name: himitsu-vault-ui-dev
+    depends_on:
+      - openbao
+    ports:
+      - "4200:4200"
+    restart: unless-stopped
+
+volumes:
+  openbao-file:
+  openbao-logs:

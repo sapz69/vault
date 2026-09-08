@@ -1,0 +1,6 @@
+```release-note:bug
+auth/cert: Allow use of always-fresh OCSP servers which elide NextUpdate.
+```
+```release-note:bug
+sdk/helper/ocsp: Allow use of always-fresh OCSP servers which elide NextUpdate.
+```

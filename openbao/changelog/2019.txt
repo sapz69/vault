@@ -1,0 +1,3 @@
+```release-note:bug
+core: Fix nil panic in the rare case were an expiration retry is running during shutdown.
+```

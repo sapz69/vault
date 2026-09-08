@@ -1,0 +1,3 @@
+```release-note:improvement
+pki: Add not_after_bound and not_before_bound role parameters to safely limit issuance duration.
+```

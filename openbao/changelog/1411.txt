@@ -1,0 +1,3 @@
+```release-note:improvement
+core/seal: Improved the clarity of the warning message logged when the server is uninitialized and auto-unsealing is configured.
+```

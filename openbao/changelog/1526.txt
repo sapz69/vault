@@ -1,0 +1,3 @@
+```release-note:improvement
+api/auth/jwt: Initial implementation of JWT Auth Method support for API client authentication.
+```

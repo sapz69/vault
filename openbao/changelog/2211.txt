@@ -1,0 +1,3 @@
+```release-note:improvement
+auth/kerberos: Add the `decode_pac` option in order to improve compatibility with kerberos systems.
+```

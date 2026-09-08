@@ -1,0 +1,102 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: himitsu-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "54321:5432"
+    volumes:
+      - himitsu_pg_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: himitsu-redis
+    restart: unless-stopped
+
+  api:
+    image: himitsu-vault-api
+    container_name: himitsu-api
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - "18200:18200"
+    environment:
+      HIMITSU_ENV: ${HIMITSU_ENV}
+      HIMITSU_PG_DSN: ${HIMITSU_PG_DSN}
+      HIMITSU_REDIS_DSN: ${HIMITSU_REDIS_DSN}
+      HIMITSU_AUTH_MODE: ${HIMITSU_AUTH_MODE}
+      HIMITSU_AUTH_SECRET: ${HIMITSU_AUTH_SECRET}
+      HIMITSU_ROOT_SEED_KEY: ${HIMITSU_ROOT_SEED_KEY}
+      HIMITSU_USERPASS_USERS: ${HIMITSU_USERPASS_USERS}
+      HIMITSU_MFA_MODE: ${HIMITSU_MFA_MODE}
+      HIMITSU_GRANT_POLICY: ${HIMITSU_GRANT_POLICY}
+      HIMITSU_CORS_ORIGINS: ${HIMITSU_CORS_ORIGINS}
+      HIMITSU_METRICS: ${HIMITSU_METRICS}
+      HIMITSU_HA_ENABLED: ${HIMITSU_HA_ENABLED}
+      HIMITSU_HA_NODE_ID: ${HIMITSU_HA_NODE_ID}
+      HIMITSU_HA_SELF_URL: ${HIMITSU_HA_SELF_URL}
+      HIMITSU_DATA_DIR: ${HIMITSU_DATA_DIR}
+      HIMITSU_SCHEMA_DIR: ${HIMITSU_SCHEMA_DIR}
+      HIMITSU_DEMO_SEED: ${HIMITSU_DEMO_SEED}
+      HIMITSU_LEARN_SEED: ${HIMITSU_LEARN_SEED}
+      HIMITSU_ALLOW_DEMO_SEED: ${HIMITSU_ALLOW_DEMO_SEED}
+      HIMITSU_ALLOW_DEV_PREVIEW_SHAMIR: ${HIMITSU_ALLOW_DEV_PREVIEW_SHAMIR}
+      HIMITSU_ALLOW_DEV_BREAKGLASS_KEY: ${HIMITSU_ALLOW_DEV_BREAKGLASS_KEY}
+      HIMITSU_BREAKGLASS_DEMO: ${HIMITSU_BREAKGLASS_DEMO}
+      HIMITSU_ALLOW_INIT_RESET: ${HIMITSU_ALLOW_INIT_RESET}
+      HIMITSU_DYNAMIC_SIMULATORS: ${HIMITSU_DYNAMIC_SIMULATORS}
+      HIMITSU_OTEL_EXPORTER_OTLP_ENDPOINT: ${HIMITSU_OTEL_EXPORTER_OTLP_ENDPOINT}
+    volumes:
+      - himitsu_api_data:/var/lib/himitsu
+
+  ui:
+    image: himitsu-vault-ui
+    container_name: himitsu-ui
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_PROXY: ${VITE_API_PROXY}
+    volumes:
+      - ui_node_modules:/app/node_modules
+
+  mcp:
+    image: himitsu-vault-mcp-server
+    container_name: himitsu-mcp
+    restart: unless-stopped
+    networks:
+      - default
+      - openbao_net
+    command: ["node", "dist/cli.js", "http", "--port=3100", "--host=0.0.0.0", "--vault-addr=http://himitsu-vault-openbao:8200"]
+    ports:
+      - "3100:3100"
+    environment:
+      HIMITSU_VAULT_ADDR: ${HIMITSU_VAULT_ADDR}
+      VAULT_ADDR: ${VAULT_ADDR}
+      HIMITSU_API_BASE: ${HIMITSU_API_BASE}
+      VAULT_AUTH: ${VAULT_AUTH}
+      VAULT_TOKEN: ${VAULT_TOKEN}
+      VAULT_USERPASS_USERNAME: ${VAULT_USERPASS_USERNAME}
+      VAULT_USERPASS_PASSWORD: ${VAULT_USERPASS_PASSWORD}
+      HIMITSU_VAULT_NAMESPACE: ${HIMITSU_VAULT_NAMESPACE}
+      HIMITSU_VAULT_EMULATOR: ${HIMITSU_VAULT_EMULATOR}
+      HIMITSU_MCP_EMULATOR: ${HIMITSU_MCP_EMULATOR}
+
+networks:
+  default: {}
+  openbao_net:
+    external: true
+    name: himitsu-vault-openbao_default
+
+volumes:
+  himitsu_pg_data:
+  himitsu_api_data:
+  ui_node_modules:

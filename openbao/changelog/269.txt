@@ -1,0 +1,3 @@
+```release-note:feature
+**Container Images**: Add Docker and Quay registries.
+```

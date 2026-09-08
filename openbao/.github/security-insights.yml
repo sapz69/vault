@@ -1,0 +1,201 @@
+header:
+  schema-version: 2.2.0
+  last-updated: '2026-07-28'
+  last-reviewed: '2026-07-28'
+  url: https://github.com/openbao/openbao
+
+project:
+  name: OpenBao
+  administrators:
+    - name: Alex Scheel
+      affiliation: ControlPlane
+      email: alexander.m.scheel@gmail.com
+      social: https://github.com/cipherboy
+      primary: false
+    - name: Andrii Fedorchuk
+      affiliation: Adfinis
+      email: andrii.fedorchuk@adfinis.com
+      social: https://github.com/driif
+      primary: false
+    - name: Brad Corrion
+      affiliation: IOTech Systems
+      email: brad@iotechsys.com
+      primary: false
+    - name: Dan Ghita
+      affiliation: Wallix
+      email: dghita@wallix.com
+      social: https://github.com/DanGhita
+      primary: false
+    - name: Eugene Davis
+      affiliation: ControlPlane
+      email: eugene.davis@control-plane.io
+      social: https://github.com/eugene-davis
+      primary: false
+    - name: Fabien Catteau
+      affiliation: GitLab
+      email: fcatteau@gitlab.com
+      social: https://github.com/fcat
+      primary: false
+    - name: James Butcher
+      affiliation: IOTech Systems
+      email: james@iotechsys.com
+      primary: false
+    - name: Jonas Köhnen
+      affiliation: SAP (Liquid Reply)
+      email: j.koehnen@reply.de
+      social: https://github.com/satoqz
+      primary: false
+    - name: Julian Cassignol
+      affiliation: WALLIX
+      email: jcassignol@wallix.com
+      primary: false
+    - name: Klaus Kiefer
+      affiliation: SAP
+      email: klaus.kiefer@sap.com
+      social: https://github.com/klaus-sap
+      primary: false
+    - name: Mark Mishaev
+      affiliation: GitLab
+      email: mmishaev@gitlab.com
+      social: https://github.com/markmishaev76
+      primary: false
+    - name: Michael Hofer
+      affiliation: Adfinis
+      email: michael.hofer@adfinis.com
+      social: https://github.com/karras
+      primary: true
+  repositories:
+    - name: .github
+      url: https://github.com/openbao/.github
+      comment : |
+        Meta project to provide information about the OpenBao Github organisation.
+    - name: artwork
+      url: https://github.com/openbao/artwork
+      comment : |
+        Artwork for the OpenBao project in standardized formats.
+    - name: benchmark-openbao
+      url: https://github.com/openbao/benchmark-openbao
+      comment : |
+        A tool for benchmarking usage of OpenBao.
+    - name: dependency-vulnerabilities
+      url: https://github.com/openbao/dependency-vulnerabilities
+      comment : |
+        Automates the identification and tracking of security vulnerabilities.
+    - name: dev-wg
+      url: https://github.com/openbao/dev-wg
+      comment : |
+        Meta project for the Development Working Group.
+    - name: devbao
+      url: https://github.com/openbao/devbao
+      comment : |
+        Development environment for starting OpenBao (Vault) instances.
+    - name: dough
+      url: https://github.com/openbao/dough
+      comment : |
+        Greenfield UI rewrite.
+    - name: go-kms-wrapping
+      url: https://github.com/openbao/go-kms-wrapping
+      comment : |
+        KMS wrapping libraries split out from OpenBao.
+    - name: go-secure-stdlib
+      url: https://github.com/openbao/go-secure-stdlib
+      comment : |
+        Stdlib for OpenBao Secure products.
+    - name: marketing-wg
+      url: https://github.com/openbao/marketing-wg
+      comment : |
+        Meta project for the Marketing Working Group.
+    - name: openbao
+      url: https://github.com/openbao/openbao/
+      comment: |
+        This is the core repo for OpenBao.
+    - name: openbao-csi-provider
+      url: https://github.com/openbao/openbao-csi-provider
+      comment : |
+        OpenBao provider for Secret Store CSI Driver.
+    - name: openbao-ecosystem-logos
+      url: https://github.com/openbao/openbao-ecosystem-logos
+      comment : |
+        Logos for the OpenBao ecosystem page.
+    - name: openbao-fedora
+      url: https://github.com/openbao/openbao-fedora
+      comment : |
+        EPEL/Fedora packaging for OpenBao.
+    - name: openbao-helm
+      url: https://github.com/openbao/openbao-helm
+      comment : |
+        Helm chart to install OpenBao and other associated components.
+    - name: openbao-k8s
+      url: https://github.com/openbao/openbao-k8s
+      comment : |
+        Sidecar OpenBao agent injector for Kubernetes.
+    - name: openbao-nightly
+      url: https://github.com/openbao/openbao-nightly
+      comment : |
+        Mirror of openbao for nightly build process.
+    - name: openbao-plugin-secrets-oauthapp
+      url: https://github.com/openbao/openbao-plugin-secrets-oauthapp
+      comment : |
+        OAuth 2.0 secrets plugin for OpenBao supporting a variety of grant types.
+    - name: openbao-plugins
+      url: https://github.com/openbao/openbao-plugins
+      comment : |
+        Plugins for OpenBao, which are maintained by the project but are not included in the core OpenBao binary.
+    - name: openbao-snapshot-agent
+      url: https://github.com/openbao/openbao-snapshot-agent
+      comment : |
+        Snapshot agent to create OpenBao backups.
+    - name: openbao-template
+      url: https://github.com/openbao/openbao-template
+      comment : |
+        Template rendering, notifier, and supervisor for OpenBao data.
+  vulnerability-reporting:
+    reports-accepted: true
+    bug-bounty-available: false
+    contact: 
+      name: Security mailing list
+      email: openbao-security@lists.openssf.org
+      primary: true
+    comment: We take OpenBao's security and our users' trust very seriously. If you believe you have found a security issue in OpenBao, please responsibly disclose by contacting us.
+  documentation:
+    detailed-guide: https://openbao.org/docs/
+    quickstart-guide: https://openbao.org/docs/get-started/developer-qs/
+    support-policy: https://openbao.org/community/policies/support/
+  homepage: https://openbao.org/
+
+repository:
+  url: https://github.com/openbao/openbao
+  status: active
+  accepts-change-request: true
+  accepts-automated-change-request: true
+  core-team:
+    - name: Alex Scheel
+      email: alexander.m.scheel@gmail.com
+      social: https://github.com/cipherboy
+      primary: true
+    - name: Dan Ghita
+      email: dghita@wallix.com
+      social: https://github.com/DanGhita
+      primary: false
+    - name: Jan Martens
+      email: jan@martens.eu.org
+      social: https://github.com/JanMa
+      primary: false
+    - name: Jonas Köhnen
+      email: jonas@satoqz.net
+      social: https://github.com/satoqz
+      primary: false
+  license:
+    url: https://github.com/openbao/openbao/blob/main/LICENSE
+    expression: 'Mozilla Public License 2.0'
+  security:
+    assessments:
+      self:
+        comment: |
+          Self assessment has not yet been completed.
+  release:
+    automated-pipeline: true
+    distribution-points:
+      - uri: https://github.com/openbao/openbao/releases/
+        comment:  GitHub Release Page
+    changelog: https://github.com/openbao/openbao/blob/main/CHANGELOG.md

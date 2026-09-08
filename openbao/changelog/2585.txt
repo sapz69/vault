@@ -1,0 +1,3 @@
+```release-note:improvement
+secrets/totp: Add `generated`, `expire_time`, and `period` fields to code generation response.
+```

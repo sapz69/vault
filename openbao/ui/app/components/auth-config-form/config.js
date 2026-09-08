@@ -1,0 +1,51 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+import AdapterError from '@ember-data/adapter/error';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { task } from 'ember-concurrency';
+import { waitFor } from '@ember/test-waiters';
+import transitionToSafe from 'vault/utils/transition-to-safe';
+
+/**
+ * @module AuthConfigForm/Config
+ * The `AuthConfigForm/Config` is the base form to configure auth methods.
+ *
+ * @example
+ * ```js
+ * {{auth-config-form/config model.model}}
+ * ```
+ *
+ * @property model=null {DS.Model} - The corresponding auth model that is being configured.
+ *
+ */
+
+export default class AuthConfigBase extends Component {
+  tagName = '';
+  model = null;
+
+  @service flashMessages;
+  @service router;
+
+  @task
+  @waitFor
+  *saveModel() {
+    try {
+      yield this.model.save();
+    } catch (err) {
+      // AdapterErrors are handled by the error-message component
+      // in the form
+      if (err instanceof AdapterError === false) {
+        throw err;
+      }
+      return;
+    }
+    transitionToSafe(this.router, 'vault.cluster.access.methods');
+    this.flashMessages.success('The configuration was saved successfully.');
+  }
+
+  static positionalParams = ['model'];
+}

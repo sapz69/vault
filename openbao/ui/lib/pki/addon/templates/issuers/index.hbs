@@ -1,0 +1,63 @@
+<SecretListHeader
+  @model={{this.model.parentModel}}
+  @backendCrumb={{hash
+    label=this.model.parentModel.id
+    text=this.model.parentModel.id
+    path="vault.cluster.secrets.backend.list-root"
+    model=this.model.parentModel.id
+  }}
+  @isEngine={{true}}
+/>
+<Toolbar>
+  <ToolbarActions>
+    <ToolbarLink @route="issuers.import" data-test-generate-issuer="import" @model={{(current-mount-path)}}>
+      Import
+    </ToolbarLink>
+    <BasicDropdown @class="popup-menu" @horizontalPosition="auto-right" @verticalPosition="below" as |D|>
+      <D.Trigger
+        class={{concat "toolbar-link" (if D.isOpen " is-active")}}
+        @htmlTag="button"
+        data-test-issuer-generate-dropdown
+      >
+        Generate
+        <Chevron @direction="down" @isButton={{true}} />
+      </D.Trigger>
+      <D.Content @defaultClass="popup-menu-content">
+        <nav class="box menu" aria-label="generate options">
+          <ul class="menu-list">
+            <li class="action">
+              <LinkTo
+                @route="issuers.generate-root"
+                {{on "click" (fn this.onLinkClick D)}}
+                data-test-generate-issuer="root"
+                @model={{(current-mount-path)}}
+              >
+                Root
+              </LinkTo>
+            </li>
+            <li class="action">
+              <LinkTo
+                @route="issuers.generate-intermediate"
+                {{on "click" (fn this.onLinkClick D)}}
+                data-test-generate-issuer="intermediate"
+                @model={{(current-mount-path)}}
+              >
+                Intermediate CSR
+              </LinkTo>
+            </li>
+          </ul>
+        </nav>
+      </D.Content>
+    </BasicDropdown>
+  </ToolbarActions>
+</Toolbar>
+
+{{#if this.model.issuersModel.length}}
+  <Page::PkiIssuerList @issuers={{this.model.issuersModel}} @mountPoint={{this.mountPoint}} />
+{{else}}
+  <EmptyState @title="PKI not configured" @message={{this.notConfiguredMessage}}>
+    <LinkTo @route="configuration.create" @model={{(current-mount-path)}}>
+      Configure PKI
+    </LinkTo>
+  </EmptyState>
+{{/if}}

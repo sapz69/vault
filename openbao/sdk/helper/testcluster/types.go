@@ -1,0 +1,154 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
+package testcluster
+
+import (
+	"context"
+	"crypto/ecdsa"
+	"crypto/tls"
+	"crypto/x509"
+	"time"
+
+	"github.com/hashicorp/go-hclog"
+	"github.com/openbao/openbao/api/v2"
+)
+
+type VaultClusterNode interface {
+	APIClient() *api.Client
+	TLSConfig() *tls.Config
+}
+
+type VaultCluster interface {
+	Nodes() []VaultClusterNode
+	GetBarrierKeys() [][]byte
+	GetRecoveryKeys() [][]byte
+	GetBarrierOrRecoveryKeys() [][]byte
+	SetBarrierKeys([][]byte)
+	SetRecoveryKeys([][]byte)
+	GetCACertPEMFile() string
+	Cleanup()
+	ClusterID() string
+	NamedLogger(string) hclog.Logger
+	SetRootToken(token string)
+	GetRootToken() string
+}
+
+type VaultNodeConfig struct {
+	// Not configurable because cluster creator wants to control these:
+	//   PluginDirectory string `hcl:"plugin_directory"`
+	//   APIAddr              string      `hcl:"api_addr"`
+	//   ClusterAddr          string      `hcl:"cluster_addr"`
+	//   Storage   *Storage `hcl:"-"`
+	//   HAStorage *Storage `hcl:"-"`
+	//   DisableMlock bool `hcl:"disable_mlock"`
+	//   ClusterName string `hcl:"cluster_name"`
+
+	// Not configurable yet:
+	//   Seals   []*KMS   `hcl:"-"`
+	//   Entropy *Entropy `hcl:"-"`
+	//   Telemetry *Telemetry `hcl:"telemetry"`
+	//   PidFile string `hcl:"pid_file"`
+	//   ServiceRegistrationType        string
+	//   ServiceRegistrationOptions    map[string]string
+
+	StorageOptions map[string]string
+
+	DefaultMaxRequestDuration      time.Duration `json:"default_max_request_duration"`
+	LogFormat                      string        `json:"log_format"`
+	LogLevel                       string        `json:"log_level"`
+	CacheSize                      int           `json:"cache_size"`
+	DisableCache                   bool          `json:"disable_cache"`
+	DisablePrintableCheck          bool          `json:"disable_printable_check"`
+	EnableUI                       bool          `json:"ui"`
+	MaxLeaseTTL                    time.Duration `json:"max_lease_ttl"`
+	DefaultLeaseTTL                time.Duration `json:"default_lease_ttl"`
+	ClusterCipherSuites            string        `json:"cluster_cipher_suites"`
+	PluginFileUid                  int           `json:"plugin_file_uid"`
+	PluginFilePermissions          int           `json:"plugin_file_permissions"`
+	EnableRawEndpoint              bool          `json:"raw_storage_endpoint"`
+	DisableClustering              bool          `json:"disable_clustering"`
+	DisablePerformanceStandby      bool          `json:"disable_performance_standby"`
+	DisableSealWrap                bool          `json:"disable_sealwrap"`
+	DisableIndexing                bool          `json:"disable_indexing"`
+	DisableSentinelTrace           bool          `json:"disable_sentinel"`
+	EnableResponseHeaderHostname   bool          `json:"enable_response_header_hostname"`
+	LogRequestsLevel               string        `json:"log_requests_level"`
+	EnableResponseHeaderRaftNodeID bool          `json:"enable_response_header_raft_node_id"`
+	UnsafeAllowAPIAuditCreation    bool          `json:"unsafe_allow_api_audit_creation"`
+	AllowAuditLogPrefixing         bool          `json:"allow_audit_log_prefixing"`
+	DisableStandbyReads            bool          `json:"disable_standby_reads"`
+	AllowUnauthenticatedWorkflows  bool          `json:"allow_unauthenticated_workflows"`
+
+	// Additional addresses in addition to the default tls-enabled
+	// 0.0.0.0:8200 listener. Currently only works for
+	// DockerClusterNode containers. Each slice item is a map
+	// of listener type -> listener configuration.
+	AdditionalListeners []any `json:"listeners"`
+
+	// Enable a stdout audit log device through configuration.
+	AuditLogStdout bool `json:"-"`
+}
+
+type ClusterNode struct {
+	APIAddress string `json:"api_address"`
+}
+
+type ClusterJson struct {
+	Nodes      []ClusterNode `json:"nodes"`
+	CACertPath string        `json:"ca_cert_path"`
+	RootToken  string        `json:"root_token"`
+}
+
+type ClusterOptions struct {
+	ClusterName        string
+	KeepStandbysSealed bool
+	SkipInit           bool
+	CACert             []byte
+	NumCores           int
+	TmpDir             string
+	Logger             hclog.Logger
+	VaultNodeConfig    *VaultNodeConfig
+}
+
+type CA struct {
+	CACert        *x509.Certificate
+	CACertBytes   []byte
+	CACertPEM     []byte
+	CACertPEMFile string
+	CAKey         *ecdsa.PrivateKey
+	CAKeyPEM      []byte
+}
+
+// Storage is a common base type for use in docker.DockerClusterOptions
+// to abstract between ClusterStorage and NodeStorage. The former is
+// generally preferred as it gives more control over multi-node storage
+// via a factory pattern. It should never be directly implemented; the
+// Docker test cluster architecture requires either child interface.
+type Storage interface {
+	Type() string
+
+	// Cleanup may be called multiple times or not at all.
+	Cleanup() error
+}
+
+// ClusterStorage yields a new NodeStorage for the requested node.
+type ClusterStorage interface {
+	Storage
+	ForNode(ctx context.Context, index int) (NodeStorage, error)
+}
+
+// NodeStorage is an instance of a storage backend for a single OpenBao node.
+// This was previously named ClusterStorage and gave the impression that all
+// decisions needed to be made up front (as Opts() is more or less static);
+//
+// We've now renamed this to make it more clear and added a new factory
+// pattern.
+type NodeStorage interface {
+	Storage
+
+	// A best effort is made to call Start exactly once, but be prepared to
+	// ignore it if called multiple times.
+	Start(context.Context, *ClusterOptions) error
+	Opts() map[string]any
+}

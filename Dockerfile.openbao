@@ -1,0 +1,40 @@
+# syntax=docker/dockerfile:1
+FROM node:20-alpine AS ui-builder
+RUN corepack enable && corepack prepare pnpm@10.34.4 --activate
+WORKDIR /src
+COPY openbao/ui ./ui
+COPY openbao/internal/http ./internal/http
+WORKDIR /src/ui
+RUN pnpm install --frozen-lockfile
+RUN pnpm build
+
+FROM alpine:3.24.1 AS plugin-fetcher
+RUN apk add --no-cache curl tar
+COPY scripts/install-openbao-plugins.sh /tmp/install-openbao-plugins.sh
+RUN sh /tmp/install-openbao-plugins.sh /plugins
+
+FROM golang:1.27-alpine AS go-builder
+RUN apk add --no-cache git
+WORKDIR /src
+COPY openbao/. .
+COPY --from=ui-builder /src/internal/http/web_ui ./internal/http/web_ui
+ENV CGO_ENABLED=0
+RUN go build -tags "openbao ui" -o /usr/bin/bao .
+
+FROM alpine:3.24.1
+RUN addgroup openbao && adduser -S -G openbao openbao
+RUN apk add --no-cache ca-certificates libcap su-exec dumb-init tzdata gcompat
+COPY --from=go-builder /usr/bin/bao /usr/bin/bao
+RUN ln -s /usr/bin/bao /usr/bin/vault
+RUN mkdir -p /openbao/logs /openbao/file /openbao/config /openbao/plugins && \
+    chown -R openbao:openbao /openbao
+COPY --from=plugin-fetcher --chown=openbao:openbao /plugins /openbao/plugins
+COPY config/openbao.hcl /openbao/config/openbao.hcl
+COPY openbao/.release/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
+    chown -R openbao:openbao /openbao
+
+EXPOSE 8200
+USER openbao
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["server", "-config=/openbao/config/openbao.hcl"]

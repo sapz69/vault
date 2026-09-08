@@ -1,0 +1,3 @@
+```release-note:change
+sdk/certutil: `certutil.ParsePublicKeyPEM` will now return a `crypto.PublicKey` instead of `any`. You might need to remove type assertions from your code.
+```

@@ -1,0 +1,3 @@
+```release-note:change
+openbao: Update modules and checksums to address vulnerabilities.
+```

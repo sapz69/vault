@@ -1,0 +1,7 @@
+FROM node:20-alpine
+RUN corepack enable && corepack prepare pnpm@10.34.4 --activate
+WORKDIR /src/ui
+COPY openbao/ui ./
+RUN pnpm install --frozen-lockfile
+EXPOSE 4200
+CMD ["pnpm", "exec", "ember", "server", "--proxy=http://himitsu-vault-openbao:8200", "--host=0.0.0.0", "--port=4200"]

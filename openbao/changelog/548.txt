@@ -1,0 +1,3 @@
+```release-note:improvement
+docker: Add `/bin/vault` symlink to docker images.
+```

@@ -1,0 +1,6 @@
+node_modules
+openbao/.git
+openbao/ui/node_modules
+openbao/ui/dist
+openbao-init.json
+.env*
