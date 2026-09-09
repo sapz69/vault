@@ -9,6 +9,7 @@ export const AUTH = 'vault.cluster.auth';
 export const REDIRECT = 'vault.cluster.redirect';
 export const CLUSTER = 'vault.cluster';
 export const CLUSTER_INDEX = 'vault.cluster.index';
+export const DASHBOARD = 'vault.cluster.dashboard';
 export const OIDC_CALLBACK = 'vault.cluster.oidc-callback';
 export const OIDC_PROVIDER = 'vault.cluster.oidc-provider';
 export const NS_OIDC_PROVIDER = 'vault.cluster.oidc-provider-ns';

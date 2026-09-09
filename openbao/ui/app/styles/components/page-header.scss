@@ -3,12 +3,31 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+// PageHeader is used across many surfaces (cluster dashboard, secrets backends,
+// policies, settings). This stylesheet deliberately keeps the existing API
+// stable (`<PageHeader as |p|>` yields `p.levelLeft`, `p.levelRight`, `p.top`)
+// while polishing the visuals and offering opt-in class hooks for the new
+// eyebrow / title / subtitle / actions pattern.
+//
+// New opt-in classes (added directly inside the yielded block):
+//   .page-header-eyebrow   - small uppercase label rendered above the title
+//   .page-header-subtitle  - secondary descriptor rendered under the title
+//   .page-header-actions   - cluster of buttons/links on the right
+//   .page-header-divider   - 1px hairline rendered below the entire header
 .page-header {
   padding-bottom: $size-10;
   padding-top: $size-4;
+  position: relative;
 
+  // The level itself gets tighter spacing than the legacy default so the
+  // eyebrow sits visually anchored to the title block.
   .level {
     align-items: flex-end;
+    gap: $size-6;
+
+    @include until($desktop) {
+      gap: $size-4;
+    }
   }
   .level-left,
   .level-right {
@@ -27,10 +46,18 @@
 
   .title {
     margin-top: $size-2;
+    // Use the hv-* foreground-strong token so the title reads correctly under
+    // both light and dark themes without baking a single color here.
+    color: var(--hv-foreground-strong, currentColor);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
   }
 
   .title-with-icon {
+    align-items: center;
     display: flex;
+    gap: $size-3;
   }
 
   .breadcrumb + .level .title {
@@ -40,5 +67,68 @@
     height: auto;
     vertical-align: -0.15em;
     width: auto;
+  }
+
+  // ---- opt-in block elements ---------------------------------------------
+
+  .page-header-eyebrow {
+    color: var(--hv-foreground-faint, #6b7280);
+    display: inline-flex;
+    align-items: center;
+    gap: $size-2;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin-bottom: $size-2;
+    text-transform: uppercase;
+
+    .page-header-eyebrow-dot {
+      background: var(--hv-violet-500, #7c3aed);
+      border-radius: 999px;
+      display: inline-block;
+      flex-shrink: 0;
+      height: 6px;
+      width: 6px;
+    }
+  }
+
+  .page-header-subtitle {
+    color: var(--hv-foreground-muted, #4b5563);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: $size-2;
+    max-width: 64ch;
+  }
+
+  .page-header-actions {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: $size-2;
+    justify-content: flex-end;
+
+    @include until($mobile) {
+      justify-content: flex-start;
+    }
+  }
+
+  // The top yielded block (breadcrumbs / tabs) gets a hairline separator
+  // when combined with the polished title block, so the header feels like
+  // one composed unit rather than two stacked regions.
+  &.page-header--composed {
+    border-bottom: 1px solid var(--hv-border-faint, rgba(0, 0, 0, 0.06));
+    margin-bottom: $size-6;
+    padding-bottom: $size-6;
+  }
+
+  // Honor dark theme on top of the hv-foreground tokens.
+  @media (prefers-color-scheme: dark) {
+    .page-header-eyebrow {
+      color: var(--hv-foreground-faint, #9ca3af);
+    }
+    .page-header-subtitle {
+      color: var(--hv-foreground-muted, #d1d5db);
+    }
   }
 }

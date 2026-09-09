@@ -62,6 +62,7 @@
 @import './components/codemirror';
 @import './components/confirm';
 @import './components/console-ui-panel';
+@import './components/dashboard';
 @import './components/diff-version-selector';
 @import './components/doc-link';
 @import './components/empty-state-component';
@@ -75,8 +76,10 @@
 @import './components/init-illustration';
 @import './components/info-table-row';
 @import './components/known-secondaries-card.scss';
+@import './components/kpi-tile';
 @import './components/linkable-item';
 @import './components/linked-block';
+@import './components/license-info';
 @import './components/list-item-row';
 @import './components/list-pagination';
 @import './components/logo-edition';
@@ -110,6 +113,7 @@
 @import './components/token-expire-warning';
 @import './components/toolbar';
 @import './components/tool-tip';
+@import './components/topbar';
 @import './components/transit-card';
 @import './components/ttl-picker';
 @import './components/unseal-warning';

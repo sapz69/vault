@@ -10,11 +10,18 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noEmitOnError": true,
     "skipLibCheck": true,
+    // Ember uses Babel for actual JS emission (see @ember/app-tsconfig).
+    // Make this explicit so the TypeScript language service in editors does
+    // not try to emit .js output that would collide with existing files
+    // (e.g. `application.js`) when `allowJs: true` is on.
+    "noEmit": true,
     // The combination of `baseUrl` with `paths` allows Ember's classic package
     // layout, which is not resolvable with the Node resolution algorithm, to
-    // work with TypeScript.
+    // work with TypeScript. `baseUrl` is deprecated in TS 7+, but Ember's
+    // classic layout still needs it, so we silence the deprecation warning
+    // until Ember migrates off it.
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "vault/tests/*": ["tests/*"],

@@ -3,6 +3,163 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+//
+// Sidebar visual treatment.
+//
+// HDS exposes its sidenav colors/spacing as `--token-side-nav-*` CSS
+// variables. We override them here so the sidebar uses the same `--hv-*`
+// design tokens as the rest of the Himitsu Vault UI, while leaving the
+// HDS markup, a11y semantics and component behavior untouched.
+//
+
+.hds-side-nav {
+  // ---- theme overrides (drive the entire sidebar from --hv-* tokens) ----
+  --token-side-nav-color-surface-primary: var(--hv-bg-1);
+  --token-side-nav-color-foreground-primary: var(--hv-fg-muted);
+  --token-side-nav-color-foreground-strong: var(--hv-fg);
+  --token-side-nav-color-foreground-faint: var(--hv-fg-subtle);
+  --token-side-nav-color-surface-interactive-hover: var(--hv-bg-2);
+  --token-side-nav-color-surface-interactive-active: var(--hv-violet-soft);
+  --token-side-nav-wrapper-border-color: var(--hv-border);
+  --token-side-nav-body-list-item-border-radius: #{$radius-large};
+  --token-side-nav-body-list-item-spacing-vertical: #{$spacing-xxs};
+  --token-side-nav-wrapper-padding-vertical: #{$spacing-l};
+  --token-side-nav-wrapper-padding-horizontal: #{$spacing-m};
+}
+
+// Subtle gradient at the very top of the sidebar so the brand area
+// visually separates from the nav links below it.
+.hds-side-nav__header {
+  position: relative;
+  padding-bottom: $spacing-m;
+  margin-bottom: $spacing-s;
+  background: linear-gradient(
+    180deg,
+    var(--hv-violet-soft) 0%,
+    transparent 100%
+  );
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: $spacing-m;
+    right: $spacing-m;
+    bottom: 0;
+    height: 1px;
+    background: var(--hv-border);
+  }
+}
+
+// Console toggle / user-menu icon buttons get the same hover treatment as
+// nav links, so they feel like part of the same control surface.
+.hds-side-nav__header-action-button {
+  border-radius: $radius-large;
+  transition: background $speed $easing, color $speed $easing;
+
+  &:hover {
+    background: var(--hv-bg-2);
+    color: var(--hv-fg);
+  }
+}
+
+// Section titles (Himitsu Vault, Monitoring, etc.).
+.hds-side-nav__list-title {
+  padding-top: $spacing-s;
+  padding-bottom: $spacing-xs;
+  font-family: $family-monospace;
+  font-size: $size-9;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hv-fg-subtle);
+}
+
+// Insert a hairline divider between consecutive nav groups so the eye
+// reads them as separate clusters, not one long list.
+.hds-side-nav__list-wrapper + .hds-side-nav__list-wrapper {
+  position: relative;
+  padding-top: $spacing-s;
+  margin-top: $spacing-s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: $spacing-m;
+    right: $spacing-m;
+    height: 1px;
+    background: var(--hv-border);
+  }
+}
+
+// Per-link refinements: smooth color transitions + a violet accent stripe
+// for the active route so the eye can locate "where am I" instantly.
+.hds-side-nav__list-item-link {
+  position: relative;
+  transition:
+    background $speed $easing,
+    color $speed $easing,
+    box-shadow $speed $easing;
+  border: 1px solid transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -$spacing-xs;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    border-radius: $radius;
+    background: var(--hv-violet);
+    box-shadow: 0 0 8px var(--hv-violet-glow);
+    transition: transform $speed $easing;
+  }
+
+  &:hover {
+    border-color: var(--hv-border);
+  }
+
+  &.active,
+  &:active,
+  &.mock-active {
+    color: var(--hv-fg);
+    border-color: var(--hv-violet);
+    font-weight: $font-weight-semibold;
+
+    &::before {
+      transform: translateY(-50%) scaleY(1);
+    }
+
+    .hds-side-nav__list-item-icon-leading,
+    .hds-side-nav__list-item-text {
+      color: var(--hv-fg);
+    }
+  }
+
+  .hds-side-nav__list-item-icon-leading {
+    color: var(--hv-fg-subtle);
+    transition: color $speed $easing;
+  }
+
+  &:hover .hds-side-nav__list-item-icon-leading,
+  &.active .hds-side-nav__list-item-icon-leading {
+    color: var(--hv-violet-glow);
+  }
+
+  .hds-side-nav__list-item-text {
+    transition: color $speed $easing;
+  }
+}
+
+// Footer (namespace picker) sits in a faint well so it reads as a
+// separate region from the nav links above.
+.hds-side-nav__footer {
+  padding-top: $spacing-m;
+  border-top: 1px solid var(--hv-border);
+}
+
+// Sidebar user-menu (popover opened from the header avatar).
 .sidebar-user-menu {
   align-self: center;
 

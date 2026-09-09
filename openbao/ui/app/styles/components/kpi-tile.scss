@@ -1,0 +1,137 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+.kpi-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-s;
+  padding: $spacing-l;
+  background: var(--hv-bg-1);
+  border: 1px solid var(--hv-border);
+  border-radius: $radius-large;
+  transition: border-color $speed $easing, background $speed $easing;
+
+  &:hover {
+    border-color: var(--hv-border-strong);
+  }
+
+  // status-tinted top border for at-a-glance health
+  &.is-success {
+    border-top: 2px solid var(--hv-success);
+  }
+  &.is-warn {
+    border-top: 2px solid var(--hv-warn);
+  }
+  &.is-danger {
+    border-top: 2px solid var(--hv-danger);
+  }
+  &.is-muted {
+    border-top: 2px solid var(--hv-border);
+  }
+}
+
+.kpi-tile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-s;
+  min-height: 24px;
+}
+
+.kpi-tile-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-family: $family-monospace;
+  font-size: $size-9;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hv-fg-subtle);
+}
+
+.kpi-tile-status {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xxs;
+  font-family: $family-monospace;
+  font-size: $size-9;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &.is-success {
+    color: var(--hv-success);
+  }
+  &.is-warn {
+    color: var(--hv-warn);
+  }
+  &.is-danger {
+    color: var(--hv-danger);
+  }
+  &.is-muted {
+    color: var(--hv-fg-subtle);
+  }
+}
+
+.kpi-tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxs;
+}
+
+.kpi-tile-value {
+  font-family: $family-sans;
+  font-size: $size-3;
+  font-weight: $font-weight-semibold;
+  color: var(--hv-fg);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  word-break: break-word;
+}
+
+.kpi-tile-sub {
+  font-size: $size-8;
+  color: var(--hv-fg-muted);
+  line-height: 1.4;
+}
+
+.kpi-tile-meta {
+  margin-top: $spacing-s;
+  padding-top: $spacing-s;
+  border-top: 1px dashed var(--hv-border);
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxs;
+  font-size: $size-9;
+  color: var(--hv-fg-muted);
+}
+
+.kpi-tile-loading {
+  pointer-events: none;
+  opacity: 0.65;
+
+  .kpi-tile-value,
+  .kpi-tile-sub {
+    background: linear-gradient(
+      90deg,
+      var(--hv-bg-2) 0%,
+      var(--hv-bg-3) 50%,
+      var(--hv-bg-2) 100%
+    );
+    background-size: 200% 100%;
+    color: transparent;
+    border-radius: $radius;
+    animation: kpi-shimmer 1.4s linear infinite;
+  }
+}
+
+@keyframes kpi-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

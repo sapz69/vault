@@ -1,0 +1,142 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+.license-info {
+  background: var(--hv-bg-1);
+  border: 1px solid var(--hv-border);
+  border-radius: 12px;
+  padding: $spacing-xxl;
+
+  @include until($mobile) {
+    padding: $size-8;
+  }
+}
+
+.license-info-status {
+  align-items: center;
+  display: inline-flex;
+  gap: $size-2;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.license-info-status-dot {
+  background: var(--hv-fg-subtle);
+  border-radius: 999px;
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+}
+
+.license-info-status--success {
+  color: var(--hv-success, #16a34a);
+
+  .license-info-status-dot {
+    background: var(--hv-success, #16a34a);
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.18);
+  }
+}
+
+.license-info-status--neutral {
+  color: var(--hv-fg-muted);
+}
+
+.license-info-title {
+  color: var(--hv-fg);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: $size-4 0 $size-2;
+}
+
+.license-info-subtitle {
+  color: var(--hv-fg-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 $size-8;
+  max-width: 64ch;
+}
+
+.license-info-grid {
+  display: grid;
+  gap: $size-5 $size-8;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.license-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: $size-1;
+  min-width: 0;
+}
+
+.license-info-row--full {
+  grid-column: 1 / -1;
+}
+
+.license-info-row-label {
+  color: var(--hv-fg-subtle);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.license-info-row-value {
+  align-items: center;
+  color: var(--hv-fg);
+  display: flex;
+  font-size: 14px;
+  gap: $size-3;
+  min-width: 0;
+  word-break: break-all;
+
+  code {
+    background: var(--hv-bg-2);
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 2px 6px;
+  }
+}
+
+.license-info-copy {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--hv-border);
+  border-radius: 6px;
+  color: var(--hv-fg-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 600;
+  gap: $size-1;
+  letter-spacing: 0.04em;
+  padding: 4px 8px;
+  text-transform: uppercase;
+  transition: background-color 150ms ease, color 150ms ease;
+
+  &:hover {
+    background: var(--hv-bg-2);
+    color: var(--hv-fg);
+  }
+}
+
+.license-info-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $size-2;
+}
+
+.license-info-feature {
+  background: var(--hv-bg-2);
+  border: 1px solid var(--hv-border);
+  border-radius: 999px;
+  color: var(--hv-fg);
+  font-size: 12px;
+  padding: 2px 10px;
+}

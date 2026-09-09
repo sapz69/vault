@@ -16,7 +16,7 @@ module('Integration | Component | sidebar-nav-cluster', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it should render nav headings', async function (assert) {
-    const headings = ['OpenBao', 'Monitoring'];
+    const headings = ['Himitsu Vault', 'Monitoring'];
     stubPermissions(this.owner, true);
     await renderComponent();
 
@@ -37,11 +37,11 @@ module('Integration | Component | sidebar-nav-cluster', function (hooks) {
       .exists({ count: 1 }, 'Nav links are hidden other than secrets');
     assert
       .dom('[data-test-sidebar-nav-heading]')
-      .exists({ count: 1 }, 'Headings are hidden other than OpenBao');
+      .exists({ count: 1 }, 'Headings are hidden other than Himitsu Vault');
   });
 
   test('it should render nav links', async function (assert) {
-    const links = ['Secrets engines', 'Access', 'Policies', 'Tools', 'Raft Storage', 'Seal OpenBao'];
+    const links = ['Secrets engines', 'Access', 'Policies', 'Tools', 'Raft Storage', 'Seal Himitsu Vault'];
     stubPermissions(this.owner, true);
     await renderComponent();
 

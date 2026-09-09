@@ -183,14 +183,14 @@ module('Integration | Component | page/pki-configuration-edit', function (hooks)
     assert
       .dom(SELECTORS.crlFieldLabel('autoRebuildGracePeriod'))
       .hasTextContaining(
-        'Auto-rebuild on OpenBao will rebuild the CRL in the below grace period before expiration',
+        'Auto-rebuild on Himitsu Vault will rebuild the CRL in the below grace period before expiration',
         'it renders auto rebuild toggled on text'
       );
     await click(SELECTORS.crlToggleInput('deltaRebuildInterval'));
     assert
       .dom(SELECTORS.crlFieldLabel('deltaRebuildInterval'))
       .hasTextContaining(
-        'Delta CRL building on OpenBao will rebuild the delta CRL at the interval below:',
+        'Delta CRL building on Himitsu Vault will rebuild the delta CRL at the interval below:',
         'it renders delta crl build toggled on text'
       );
 

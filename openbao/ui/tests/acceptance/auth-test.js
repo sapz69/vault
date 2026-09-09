@@ -83,7 +83,7 @@ module('Acceptance | auth', function (hooks) {
       if (backend.type === 'token') {
         assert.ok(
           Object.keys(lastRequest.requestHeaders).includes('X-Vault-Token'),
-          'token uses OpenBao token header'
+          'token uses Himitsu Vault token header'
         );
       } else if (backend.type === 'github') {
         assert.ok(Object.keys(body).includes('token'), 'GitHub includes token');

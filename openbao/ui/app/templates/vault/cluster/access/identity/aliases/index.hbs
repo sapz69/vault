@@ -1,4 +1,18 @@
 <Identity::EntityNav @identityType={{this.identityType}} @model={{this.model}} />
+<Toolbar>
+  <ToolbarActions>
+    <ToolbarLink
+      @route="vault.cluster.access.identity.create"
+      @model={{pluralize this.identityType}}
+      @type="add"
+      data-test-alias-create-link
+    >
+      Create
+      {{this.identityType}}
+      alias
+    </ToolbarLink>
+  </ToolbarActions>
+</Toolbar>
 {{#if this.model.meta.total}}
   {{#each this.model as |item|}}
     <LinkedBlock

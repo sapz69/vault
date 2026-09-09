@@ -12,6 +12,7 @@ import {
   AUTH,
   CLUSTER,
   CLUSTER_INDEX,
+  DASHBOARD,
   OIDC_CALLBACK,
   OIDC_PROVIDER,
   NS_OIDC_PROVIDER,
@@ -38,6 +39,7 @@ export default Route.extend({
         // only want to redirect if we're going to authenticate
         targetRoute === AUTH &&
         transition.targetName !== CLUSTER_INDEX &&
+        transition.targetName !== DASHBOARD &&
         !isExcluded
       ) {
         return this.router.transitionTo(targetRoute, {
@@ -92,7 +94,7 @@ export default Route.extend({
       return AUTH;
     }
     if ((!cluster.needsInit && this.routeName === INIT) || (!cluster.sealed && this.routeName === UNSEAL)) {
-      return CLUSTER;
+      return DASHBOARD;
     }
     if (isAuthed && this.routeName === AUTH) {
       // if you're already authed and you wanna go to auth, you probably want to redirect

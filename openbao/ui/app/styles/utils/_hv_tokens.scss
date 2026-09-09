@@ -1,6 +1,14 @@
 /**
  * Himitsu Vault design tokens.
  * Source of truth: frontend/src/styles/index.css and frontend/tailwind.config.js
+ *
+ * The dark tokens below are applied at :root (default).
+ * .light class on <body> swaps to the light palette.
+ * .hc-theme class on <body> swaps to a high-contrast palette
+ * (applied alongside dark/light to bump borders/text contrast).
+ *
+ * NOTE: this file only declares tokens. Theme toggling is controlled
+ * at the application layer (no JS in this file).
  */
 
 :root {
@@ -20,4 +28,53 @@
   --hv-warn: #fcd34d;
   --hv-danger: #f87171;
   --hv-mint: #6ee7b7;
+}
+
+:root.light {
+  --hv-bg: #fafaf7;
+  --hv-bg-1: #f4f4f0;
+  --hv-bg-2: #ebebe5;
+  --hv-bg-3: #deded6;
+  --hv-border: #d4d4cf;
+  --hv-border-strong: #b4b4ad;
+  --hv-fg: #1a1a1d;
+  --hv-fg-muted: #4a4a52;
+  --hv-fg-subtle: #76767e;
+  --hv-violet: #6d28d9;
+  --hv-violet-glow: #7c3aed;
+  --hv-violet-soft: #ede9fe;
+  --hv-success: #16a34a;
+  --hv-warn: #b45309;
+  --hv-danger: #b91c1c;
+  --hv-mint: #047857;
+}
+
+:root.hc-theme {
+  --hv-border: #fafaf7;
+  --hv-border-strong: #ffffff;
+  --hv-fg: #ffffff;
+  --hv-fg-muted: #e4e4e7;
+  --hv-fg-subtle: #d4d4d8;
+  --hv-violet: #c4b5fd;
+  --hv-violet-glow: #ddd6fe;
+  --hv-violet-soft: #4c1d95;
+  --hv-success: #86efac;
+  --hv-warn: #fde68a;
+  --hv-danger: #fca5a5;
+  --hv-mint: #a7f3d0;
+}
+
+:root.light.hc-theme {
+  --hv-border: #1a1a1d;
+  --hv-border-strong: #000000;
+  --hv-fg: #000000;
+  --hv-fg-muted: #1f1f23;
+  --hv-fg-subtle: #3f3f46;
+  --hv-violet: #4c1d95;
+  --hv-violet-glow: #5b21b6;
+  --hv-violet-soft: #ede9fe;
+  --hv-success: #14532d;
+  --hv-warn: #78350f;
+  --hv-danger: #7f1d1d;
+  --hv-mint: #064e3b;
 }

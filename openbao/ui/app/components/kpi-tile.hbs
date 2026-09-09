@@ -1,0 +1,44 @@
+<div class={{this.tileClass}} data-test-component="kpi-tile" data-test-kpi-eyebrow={{@eyebrow}} ...attributes>
+  <div class="kpi-tile-head">
+    {{#if @eyebrow}}
+      <span class="kpi-tile-eyebrow">{{@eyebrow}}</span>
+    {{/if}}
+    {{#if this.hasStatus}}
+      <span class="kpi-tile-status {{this.statusClass}}" data-test-kpi-status>
+        <span class="kpi-tile-status-dot" aria-hidden="true"></span>
+        {{@statusLabel}}
+      </span>
+    {{/if}}
+  </div>
+
+  <div class="kpi-tile-body">
+    {{#if (has-block "value")}}
+      {{yield to="value"}}
+    {{else if @value}}
+      <span class="kpi-tile-value" data-test-kpi-value>{{@value}}</span>
+    {{/if}}
+
+    {{#if (has-block "sub")}}
+      {{yield to="sub"}}
+    {{else if @sub}}
+      <span class="kpi-tile-sub" data-test-kpi-sub>{{@sub}}</span>
+    {{/if}}
+  </div>
+
+  {{#if this.hasMeta}}
+    <div class="kpi-tile-meta" data-test-kpi-meta>
+      {{#if @meta}}
+        <span>{{@meta}}</span>
+      {{/if}}
+      {{#if (has-block "meta")}}
+        {{yield to="meta"}}
+      {{/if}}
+    </div>
+  {{/if}}
+
+  {{#if (has-block "actions")}}
+    <div class="kpi-tile-actions">
+      {{yield to="actions"}}
+    </div>
+  {{/if}}
+</div>

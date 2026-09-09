@@ -23,6 +23,8 @@ Router.map(function () {
       this.route('logout');
       this.mount('open-api-explorer', { path: '/api-explorer' });
       this.route('mfa-setup');
+      this.route('dashboard', { path: '/' });
+      this.route('license', { path: '/license' });
       this.route('storage', { path: '/storage/raft' });
       this.route('storage-restore', { path: '/storage/raft/restore' });
       this.route('settings', function () {

@@ -39,7 +39,7 @@ const testHelper = require('./test-helper');
   const vaultAddr = process.env.VAULT_ADDR;
   if (!vaultAddr) {
     console.error(
-      'Cannot run ember tests without the OpenBao Address, please make sure to export the OpenBao address, in an env ' +
+      'Cannot run ember tests without the Himitsu Vault Address, please make sure to export the Himitsu Vault address, in an env ' +
         'var named: VAULT_ADDR'
     );
     process.exit(1);
