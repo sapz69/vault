@@ -31,7 +31,7 @@ export default class PkiConfigClusterModel extends Model {
   })
   aiaPath;
 
-  // this is for pki-only cluster config, not the universal OpenBao cluster
+  // this is for pki-only cluster config, not the universal Himitsu Vault cluster
   @lazyCapabilities(apiPath`${'id'}/config/cluster`, 'id') clusterPath;
 
   get canSet() {

@@ -3,52 +3,87 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
+// EmptyState is the canonical "nothing here yet" surface for list pages,
+// auth flows, and configuration empty-states. The polish below is purely
+// visual — the component contract (EmptyState.hbs) is unchanged so every
+// existing call site keeps working.
+//
+// Additions:
+//   - typography aligned to the hv-* palette (title, subtitle, message)
+//   - card surface with subtle inset hairline instead of a hard top shadow
+//   - icon-badge treatment that reads consistently in light & dark themes
+//   - opt-in modifier classes (see below) so future surfaces can opt into
+//     richer compositions without bloating the component template
+
 .empty-state {
   align-items: center;
+  background: var(--hv-bg-1);
+  border: 1px solid var(--hv-border);
+  border-radius: 12px;
   color: var(--hv-fg-muted);
-  background: var(--hv-bg-2);
   display: flex;
   justify-content: center;
   padding: $spacing-xxl $spacing-s;
-  box-shadow: 0 -2px 0 -1px var(--hv-border);
+  text-align: center;
 }
 
+// Transparent variant — same content, no surface. Useful when the empty
+// state sits directly inside a list (e.g. leases list) that already has its
+// own surface treatment.
 .empty-state-transparent {
   align-items: center;
-  color: var(--hv-fg-muted);
   background: transparent;
+  color: var(--hv-fg-muted);
   display: flex;
   justify-content: center;
   padding: $spacing-xxl 0;
-  box-shadow: none;
+  text-align: center;
 }
 
 .empty-state-content {
-  max-width: 320px;
+  max-width: 380px;
+  width: 100%;
 }
 
+// ---- typography -------------------------------------------------------
+
 .empty-state-title {
-  color: var(--hv-fg-muted);
+  color: var(--hv-fg);
   font-size: $size-4;
-  font-weight: $font-weight-semibold;
-  line-height: 1.2;
-  margin-bottom: $spacing-xs;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
 }
 
 .empty-state-subTitle {
+  color: var(--hv-fg-muted);
   font-size: $size-7;
-  margin-top: -10px;
-  padding-bottom: $spacing-s;
+  line-height: 1.5;
+  margin-top: $spacing-xs;
+}
+
+.empty-state-message {
+  color: var(--hv-fg-muted);
+  font-size: $size-7;
+  line-height: 1.5;
+  margin-top: $spacing-s;
 }
 
 .empty-state-message.has-border-bottom-light {
+  border-bottom: 1px solid var(--hv-border);
   padding-bottom: $spacing-s;
 }
 
+// ---- actions cluster ---------------------------------------------------
+
 .empty-state-actions {
-  margin-top: $spacing-xs;
+  align-items: center;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $spacing-s;
+  justify-content: center;
+  margin-top: $spacing-m;
 
   a,
   .link,
@@ -58,15 +93,60 @@
     font-weight: $font-weight-semibold;
     text-decoration: none;
   }
+}
 
-  > * + * {
-    margin-left: $spacing-s;
-    margin-right: $spacing-s;
+// ---- icon treatment ----------------------------------------------------
+
+// Render the icon in a soft square badge so it reads as a hero element
+// rather than a floating glyph next to the title.
+.empty-state-icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-s;
+  margin-bottom: $spacing-s;
+
+  > .hs-icon,
+  > .flight-icon {
+    align-items: center;
+    background: var(--hv-bg-2);
+    border: 1px solid var(--hv-border);
+    border-radius: 12px;
+    color: var(--hv-fg);
+    display: inline-flex;
+    float: none;
+    height: 48px;
+    justify-content: center;
+    margin: 0;
+    width: 48px;
+  }
+
+  .empty-state-title {
+    margin-bottom: 0;
   }
 }
 
-.empty-state-icon > .hs-icon,
-.empty-state-icon > .flight-icon {
-  float: left;
-  margin-right: $spacing-xs;
+// ---- modifiers (opt-in) ----------------------------------------------
+
+// Dense variant — used by inline list empty-states where the surface is
+// itself a list row container.
+.empty-state.is-dense {
+  padding: $spacing-l $spacing-s;
+}
+
+// Hero variant — gives the icon block a slightly larger treatment for
+// top-level list pages (policies, methods, scopes).
+.empty-state.is-hero {
+  padding: ($spacing-xxl * 1.25) $spacing-s;
+
+  .empty-state-icon > .hs-icon,
+  .empty-state-icon > .flight-icon {
+    height: 56px;
+    width: 56px;
+  }
+}
+
+// Error/warning variant — used by the auth MFA failure surface.
+.empty-state.is-warning {
+  border-color: var(--hv-border);
 }

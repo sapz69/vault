@@ -70,7 +70,7 @@ module('Acceptance | oidc-config clients and assignments', function (hooks) {
     assert.strictEqual(currentURL(), '/vault/access/oidc');
     assert.dom('h1.title.is-3').hasText('OIDC Provider');
     assert.dom(SELECTORS.oidcHeader).hasText(
-      `Configure OpenBao to act as an OIDC identity provider, and offer OpenBao’s various authentication
+      `Configure Himitsu Vault to act as an OIDC identity provider, and offer Himitsu Vault’s various authentication
     methods and source of identity to any client applications. Create your first app`,
       'renders call to action header when no clients are configured'
     );

@@ -1,4 +1,7 @@
-<Hds::AppFrame @hasSidebar={{@showSidebar}} @hasHeader={{false}} @hasFooter={{false}} as |Frame|>
+<Hds::AppFrame @hasSidebar={{@showSidebar}} @hasHeader={{true}} @hasFooter={{false}} as |Frame|>
+  <Frame.Header>
+    <Sidebar::Topbar />
+  </Frame.Header>
   <Frame.Sidebar data-test-sidebar-nav>
     <Hds::SideNav @isResponsive={{true}} @hasA11yRefocus={{@showSidebar}} @a11yRefocusSkipTo="app-main-content">
       <:header>

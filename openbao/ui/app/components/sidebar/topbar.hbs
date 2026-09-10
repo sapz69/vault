@@ -1,0 +1,30 @@
+<div class="topbar" data-test-component="topbar">
+  <div class="topbar-cluster">
+    <div class="topbar-cluster-id" data-test-topbar-cluster>
+      <span class="topbar-cluster-eyebrow">Cluster</span>
+      <span class="topbar-cluster-name">{{this.clusterDisplay}}</span>
+    </div>
+    <div class="topbar-cluster-namespace" data-test-topbar-namespace>
+      <Icon @name="folder" @size="16" class="topbar-namespace-icon" />
+      <span class="topbar-namespace-path">{{this.namespaceDisplay}}</span>
+    </div>
+  </div>
+
+  <div class="topbar-actions">
+    {{#if this.hasCluster}}
+      <LinkTo
+        @route="vault.cluster.dashboard"
+        @model={{this.clusterName}}
+        class="topbar-action topbar-action--primary"
+        data-test-topbar-dashboard
+      >
+        <Icon @name="dashboard" @size="16" />
+        <span>Dashboard</span>
+      </LinkTo>
+    {{/if}}
+    <DocLink @path="/docs/" class="topbar-action" data-test-topbar-docs>
+      <Icon @name="help" @size="16" />
+      <span>Documentation</span>
+    </DocLink>
+  </div>
+</div>

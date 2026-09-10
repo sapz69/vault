@@ -1,0 +1,81 @@
+{{!
+  Copyright (c) HashiCorp, Inc.
+  SPDX-License-Identifier: MPL-2.0
+}}
+
+<div class="license-info" data-test-component="license-info">
+  {{#if this.hasLicense}}
+    <div class="license-info-status license-info-status--{{this.statusKind}}">
+      <span class="license-info-status-dot" aria-hidden="true"></span>
+      <span class="license-info-status-label">{{this.statusLabel}}</span>
+    </div>
+
+    <h2 class="license-info-title">Cluster license</h2>
+    <p class="license-info-subtitle">
+      Active license installed on this cluster. Use the identifier below when contacting support.
+    </p>
+
+    <div class="license-info-grid">
+      <div class="license-info-row">
+        <div class="license-info-row-label">License ID</div>
+        <div class="license-info-row-value">
+          <code data-test-license-id>{{@licenseId}}</code>
+          <button
+            type="button"
+            class="license-info-copy"
+            {{on "click" this.copyLicenseId}}
+            aria-label="Copy license id"
+            data-test-license-copy
+          >
+            <Icon @name={{if this._copied "check" "clipboard-copy"}} @size="16" />
+            <span>{{if this._copied "Copied" "Copy"}}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="license-info-row">
+        <div class="license-info-row-label">Valid from</div>
+        <div class="license-info-row-value">{{this.formattedStart}}</div>
+      </div>
+
+      <div class="license-info-row">
+        <div class="license-info-row-label">Expires</div>
+        <div class="license-info-row-value">{{this.formattedExpiration}}</div>
+      </div>
+
+      <div class="license-info-row">
+        <div class="license-info-row-label">Performance standbys</div>
+        <div class="license-info-row-value">{{this.perfStandbyLabel}}</div>
+      </div>
+
+      <div class="license-info-row">
+        <div class="license-info-row-label">Autoloaded</div>
+        <div class="license-info-row-value">{{this.autoloadedLabel}}</div>
+      </div>
+
+      {{#if this.features.length}}
+        <div class="license-info-row license-info-row--full">
+          <div class="license-info-row-label">Features</div>
+          <div class="license-info-row-value">
+            <div class="license-info-features">
+              {{#each this.features as |feature|}}
+                <span class="license-info-feature">{{feature}}</span>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  {{else}}
+    <EmptyState
+      @title="No enterprise license installed"
+      @message="This cluster is running the community edition of Himitsu Vault. Install a license to enable enterprise features."
+      @icon="license"
+      class="is-hero"
+    >
+      <DocLink @path="/docs/enterprise/license/">
+        Learn about Himitsu Vault licensing
+      </DocLink>
+    </EmptyState>
+  {{/if}}
+</div>

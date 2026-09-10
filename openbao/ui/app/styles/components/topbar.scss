@@ -1,0 +1,144 @@
+/**
+ * Copyright (c) HashiCorp, Inc.
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+//
+// Topbar visual treatment.
+//
+// Rendered inside `<Hds::AppFrame @hasHeader={{true}}>`'s `Frame.Header`
+// slot. Uses `--hv-*` tokens so it stays consistent with the rest of the
+// UI, while relying on HDS for the outer `<header>` element + a11y.
+//
+
+.hds-app-frame__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--hv-bg-1);
+  border-bottom: 1px solid var(--hv-border);
+  // The HDS header renders at min-height by default; let our content
+  // dictate the height so we get a tight, predictable bar.
+  min-height: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-l;
+  padding: $spacing-s $spacing-l;
+  min-height: 56px;
+}
+
+.topbar-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxs;
+  min-width: 0;
+}
+
+.topbar-cluster-id {
+  display: inline-flex;
+  align-items: baseline;
+  gap: $spacing-xs;
+  min-width: 0;
+}
+
+.topbar-cluster-eyebrow {
+  font-family: $family-monospace;
+  font-size: $size-9;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hv-fg-subtle);
+}
+
+.topbar-cluster-name {
+  font-family: $family-sans;
+  font-size: $size-5;
+  font-weight: $font-weight-semibold;
+  color: var(--hv-fg);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar-cluster-namespace {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-family: $family-monospace;
+  font-size: $size-8;
+  color: var(--hv-fg-muted);
+}
+
+.topbar-namespace-icon {
+  color: var(--hv-violet-glow);
+}
+
+.topbar-namespace-path {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60ch;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-s;
+}
+
+.topbar-action {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-m;
+  background: var(--hv-bg-2);
+  border: 1px solid var(--hv-border);
+  border-radius: $radius-large;
+  color: var(--hv-fg-muted);
+  font-size: $size-8;
+  text-decoration: none;
+  transition:
+    background $speed $easing,
+    color $speed $easing,
+    border-color $speed $easing;
+
+  &:hover {
+    color: var(--hv-fg);
+    border-color: var(--hv-border-strong);
+    background: var(--hv-bg-3);
+  }
+
+  &.active {
+    color: var(--hv-fg);
+    border-color: var(--hv-violet);
+  }
+
+  // When the link is the active route, give it a subtle violet fill so
+  // it reads as "where am I" without being heavy.
+  &.topbar-action--primary.active {
+    background: var(--hv-violet-soft);
+    border-color: var(--hv-violet);
+    color: var(--hv-fg);
+    font-weight: $font-weight-semibold;
+  }
+}
+
+@media (max-width: $mobile) {
+  .topbar {
+    padding: $spacing-xs $spacing-m;
+    gap: $spacing-s;
+  }
+  .topbar-cluster-name {
+    font-size: $size-7;
+  }
+  .topbar-action span {
+    display: none; // collapse labels on mobile, icons only
+  }
+  .topbar-action {
+    padding: $spacing-xs;
+  }
+}

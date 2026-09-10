@@ -1,0 +1,194 @@
+{{!
+  Bento layout for the cluster dashboard. Each tile is fed by a tracked
+  loader inside the component; failures degrade to "loading" / "unknown"
+  so partial outages never blank the page.
+}}
+<div class="dashboard" data-test-component="dashboard-bento">
+  <header class="dashboard-header">
+    <div class="dashboard-header-text">
+      <span class="dashboard-eyebrow">Overview</span>
+      <h1 class="dashboard-title">
+        Cluster at a glance
+      </h1>
+      <p class="dashboard-subtitle">
+        Live posture for the cluster you are currently authenticated against. Tiles refresh automatically when this page is
+        revisited.
+      </p>
+    </div>
+    <div class="dashboard-meta" data-test-dashboard-meta>
+      <span class="dashboard-meta-dot" aria-hidden="true"></span>
+      <span>
+        {{if this.lastLoadedAt "Updated just now" "Loading…"}}
+      </span>
+    </div>
+  </header>
+
+  <section class="dashboard-grid" aria-label="Cluster summary">
+    {{! ─── Row 1: hero KPIs ────────────────────────────────────────────}}
+    <KpiTile
+      @eyebrow="Cluster health"
+      @status={{this.healthStatusLabel}}
+      @statusLabel={{this.healthStatusText}}
+      @value={{this.healthValue}}
+      @sub={{this.healthSub}}
+      @meta="Source · sys/health"
+      @loading={{this.isLoadingHealth}}
+      class="dashboard-span-4"
+    />
+
+    <KpiTile
+      @eyebrow="Seal state"
+      @status={{this.sealStatusLabel}}
+      @statusLabel={{this.sealStatusText}}
+      @value={{this.sealValue}}
+      @sub={{this.sealSub}}
+      @meta={{this.sealMeta}}
+      @loading={{this.isLoadingSeal}}
+      class="dashboard-span-4"
+    />
+
+    <KpiTile
+      @eyebrow="Replication"
+      @status={{this.replicationStatusLabel}}
+      @statusLabel={{this.replicationStatusText}}
+      @value={{this.replicationValue}}
+      @sub={{this.replicationSub}}
+      @meta="Source · sys/replication/status"
+      @loading={{this.isLoadingReplication}}
+      class="dashboard-span-4"
+    />
+
+    {{! ─── Row 2: count KPIs ───────────────────────────────────────────}}
+    <KpiTile
+      @eyebrow="Auth methods"
+      @status="muted"
+      @statusLabel="Mounted"
+      @value={{this.authMethodsValue}}
+      @sub="Enabled authentication backends"
+      @meta={{this.authMethodsMeta}}
+      class="dashboard-span-3"
+    />
+
+    <KpiTile
+      @eyebrow="Secrets engines"
+      @status="muted"
+      @statusLabel="Mounted"
+      @value={{this.secretEnginesValue}}
+      @sub="Enabled secret backends"
+      @meta={{this.secretEnginesMeta}}
+      class="dashboard-span-3"
+    />
+
+    <KpiTile
+      @eyebrow="Audit devices"
+      @status={{this.auditStatusLabel}}
+      @statusLabel={{this.auditStatusText}}
+      @value={{this.auditDevicesValue}}
+      @sub="Sinks capturing request logs"
+      @meta="Source · sys/audit"
+      class="dashboard-span-3"
+    />
+
+    <KpiTile
+      @eyebrow="ACL policies"
+      @status="muted"
+      @statusLabel="Configured"
+      @value={{this.policiesValue}}
+      @sub="Token-bound access policies"
+      @meta="Source · sys/policies/acl"
+      class="dashboard-span-3"
+    />
+
+    {{! ─── Row 3: panels ───────────────────────────────────────────────}}
+    <article class="dashboard-panel dashboard-span-8" data-test-panel="raft" aria-label="Raft storage cluster">
+      <div class="dashboard-panel-header">
+        <h2 class="dashboard-panel-title">Raft storage cluster</h2>
+        <span class="dashboard-panel-sub">
+          {{this.raftSummary}}
+        </span>
+      </div>
+      <div class="dashboard-panel-body">
+        {{#if this.raftPeers.length}}
+          <ul class="dashboard-list">
+            {{#each this.raftPeers as |peer|}}
+              <li class="dashboard-list-item">
+                <span>{{peer.address}}</span>
+                <span class="dashboard-row-value">{{peer.stateLabel}}</span>
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <p class="dashboard-empty">
+            No Raft peers found. Either Raft is not in use, or the current token does not have access to
+            <code>sys/storage/raft</code>.
+          </p>
+        {{/if}}
+      </div>
+    </article>
+
+    <article class="dashboard-panel dashboard-span-4" data-test-panel="namespaces" aria-label="Namespaces">
+      <div class="dashboard-panel-header">
+        <h2 class="dashboard-panel-title">Namespaces</h2>
+        <span class="dashboard-panel-sub">
+          {{this.namespacesSummary}}
+        </span>
+      </div>
+      <div class="dashboard-panel-body">
+        {{#if this.namespaceChildren.length}}
+          <ul class="dashboard-list">
+            {{#each this.namespaceChildren as |child|}}
+              <li class="dashboard-list-item">
+                <span>{{child.path}}</span>
+                <span class="dashboard-row-value">{{child.id}}</span>
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <p class="dashboard-empty">
+            No child namespaces under
+            <code>{{this.namespaceLabel}}</code>.
+          </p>
+        {{/if}}
+      </div>
+    </article>
+
+    {{! ─── Row 4: quick links + version ────────────────────────────────}}
+    <article class="dashboard-panel dashboard-span-6" data-test-panel="quicklinks" aria-label="Quick actions">
+      <div class="dashboard-panel-header">
+        <h2 class="dashboard-panel-title">Quick actions</h2>
+        <span class="dashboard-panel-sub">Jump to a common destination</span>
+      </div>
+      <div class="dashboard-panel-body">
+        <div class="dashboard-quicklinks">
+          {{#each this.quickLinks as |link|}}
+            <LinkTo @route={{link.route}} class="dashboard-quicklink" data-test-quicklink={{link.id}}>
+              <Icon @name={{link.icon}} @size="16" class="dashboard-quicklink-icon" />
+              {{link.label}}
+            </LinkTo>
+          {{/each}}
+        </div>
+      </div>
+    </article>
+
+    <article class="dashboard-panel dashboard-span-6" data-test-panel="version" aria-label="Server identification">
+      <div class="dashboard-panel-header">
+        <h2 class="dashboard-panel-title">Server</h2>
+        <span class="dashboard-panel-sub">Cluster identification</span>
+      </div>
+      <div class="dashboard-panel-body">
+        <div class="dashboard-row">
+          <span class="dashboard-row-label">Version</span>
+          <span class="dashboard-row-value">{{this.versionDisplay}}</span>
+        </div>
+        <div class="dashboard-row">
+          <span class="dashboard-row-label">Namespace</span>
+          <span class="dashboard-row-value">{{this.namespaceLabel}}</span>
+        </div>
+        <div class="dashboard-row">
+          <span class="dashboard-row-label">Cluster</span>
+          <span class="dashboard-row-value">{{this.clusterId}}</span>
+        </div>
+      </div>
+    </article>
+  </section>
+</div>

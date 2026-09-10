@@ -1,0 +1,19 @@
+# Local override so this repo's stack doesn't collide with the pre-existing
+# `himitsu-vault-openbao` / `himitsu-vault-ui-dev` containers and ports
+# (8210, 4200) already running on this host.
+#
+# Usage:
+#   docker compose -f docker-compose.openbao.yml -f docker-compose.local.yml -p vault up -d openbao ui-dev
+#
+# Server (prod UI baked in):  http://localhost:8220/ui/
+# Live-reload dev UI:         http://localhost:4210
+services:
+  openbao:
+    container_name: vault-openbao-local
+
+  ui-dev:
+    container_name: vault-ui-dev-local
+    ports: !override
+      - "4210:4200"
+    # base image hard-codes --proxy to the upstream container name; point it at ours
+    command: ["pnpm", "exec", "ember", "server", "--proxy=http://vault-openbao-local:8200", "--host=0.0.0.0", "--port=4200"]
