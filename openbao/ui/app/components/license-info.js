@@ -43,7 +43,7 @@ export default class LicenseInfoComponent extends Component {
     if (!t) return '—';
     try {
       return new Date(t).toLocaleString();
-    } catch (e) {
+    } catch {
       return t;
     }
   }
@@ -53,7 +53,7 @@ export default class LicenseInfoComponent extends Component {
     if (!t) return '—';
     try {
       return new Date(t).toLocaleString();
-    } catch (e) {
+    } catch {
       return t;
     }
   }

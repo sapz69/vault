@@ -14,10 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0A0A0B" />
 
-    {{! Inter / JetBrains Mono are self-hosted in public/fonts and loaded via app.scss @font-face rules — }}
-    {{! the app's CSP (config/content-security-policy.js) only allows style-src 'self', so no external font stylesheets here. }}
-    {{! Preload the critical font files so the browser fetches them in parallel with the CSS instead of }}
-    {{! after parsing it. font-display: swap (in app.scss) keeps text visible during the brief window. }}
+    <!-- Inter / JetBrains Mono are self-hosted in public/fonts and loaded via app.scss @font-face rules — -->
+    <!-- the app's CSP (config/content-security-policy.js) only allows style-src 'self', so no external font stylesheets here. -->
+    <!-- Preload the critical font files so the browser fetches them in parallel with the CSS instead of -->
+    <!-- after parsing it. font-display: swap (in app.scss) keeps text visible during the brief window. -->
     <link rel="preload" href="{{rootURL}}fonts/inter/inter-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href="{{rootURL}}fonts/jetbrains-mono/jetbrains-mono-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 

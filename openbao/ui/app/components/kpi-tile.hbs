@@ -1,7 +1,7 @@
-<div class={{this.tileClass}} data-test-component="kpi-tile" data-test-kpi-eyebrow={{@eyebrow}} ...attributes>
+<div class={{this.tileClass}} data-test-component="kpi-tile" ...attributes>
   <div class="kpi-tile-head">
     {{#if @eyebrow}}
-      <span class="kpi-tile-eyebrow">{{@eyebrow}}</span>
+      <span class="kpi-tile-eyebrow" data-test-kpi-eyebrow>{{@eyebrow}}</span>
     {{/if}}
     {{#if this.hasStatus}}
       <span class="kpi-tile-status {{this.statusClass}}" data-test-kpi-status>
