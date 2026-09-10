@@ -64,7 +64,16 @@ export default Service.extend({
     // we don't have an apiPath for dynamic secrets
     // and we don't need paths for them yet
     if (!apiPath) {
-      helpUrl = newModel.proto().getHelpUrl(backend);
+      // `newModel` here is a bare `class extends Model {}` created above, so it only
+      // has getHelpUrl if a real model class was found. Calling it blindly throws
+      // "newModel.proto(...).getHelpUrl is not a function" and takes down the route.
+      // Nothing can be registered without a help URL, so resolve as a no-op instead.
+      const proto = newModel.proto();
+      if (typeof proto.getHelpUrl !== 'function') {
+        debug(`No getHelpUrl on ${modelType}; skipping OpenAPI model registration`);
+        return resolve();
+      }
+      helpUrl = proto.getHelpUrl(backend);
       return this.registerNewModelWithProps(helpUrl, backend, newModel, modelType);
     }
 

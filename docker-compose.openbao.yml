@@ -19,6 +19,15 @@ services:
       - HIMITSU_ADMIN_PASSWORD=${HIMITSU_ADMIN_PASSWORD}
     command: server -config=/openbao/config/openbao.hcl
     restart: unless-stopped
+    # Without this, a wedged-but-running process is never detected: `restart:
+    # unless-stopped` only reacts to the process actually exiting.
+    # sys/health returns 200 only when initialized AND unsealed AND active.
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8200/v1/sys/health"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
 
   ui-dev:
     build:
@@ -26,10 +35,18 @@ services:
       dockerfile: Dockerfile.ui-dev
     container_name: himitsu-vault-ui-dev
     depends_on:
-      - openbao
+      openbao:
+        condition: service_healthy
     ports:
       - "4200:4200"
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:4200/ui/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      # the ember dev build takes ~2 minutes on a cold start
+      start_period: 180s
 
 volumes:
   openbao-file:

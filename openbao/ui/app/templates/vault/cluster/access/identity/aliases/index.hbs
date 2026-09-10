@@ -1,18 +1,9 @@
 <Identity::EntityNav @identityType={{this.identityType}} @model={{this.model}} />
-<Toolbar>
-  <ToolbarActions>
-    <ToolbarLink
-      @route="vault.cluster.access.identity.create"
-      @model={{pluralize this.identityType}}
-      @type="add"
-      data-test-alias-create-link
-    >
-      Create
-      {{this.identityType}}
-      alias
-    </ToolbarLink>
-  </ToolbarActions>
-</Toolbar>
+{{! No standalone "create alias" toolbar action here on purpose: the alias-create
+    route is `identity.aliases.add`, which requires an `:item_id`, because an alias
+    only exists against a specific entity or group. Aliases are created from an
+    entity's own page via its "Add alias" action. A toolbar link here can only
+    point at entity-create, which is a different thing and misleads the user. }}
 {{#if this.model.meta.total}}
   {{#each this.model as |item|}}
     <LinkedBlock
