@@ -39,6 +39,7 @@ export default class DashboardBentoComponent extends Component {
   @tracked raftError = null;
   @tracked countsState = null;
   @tracked countsError = null;
+  @tracked countsFailures = {};
   @tracked namespacesState = null;
   @tracked namespacesError = null;
   @tracked versionState = null;
@@ -134,25 +135,34 @@ export default class DashboardBentoComponent extends Component {
   @task *loadCountsTask() {
     const adapter = this.store.adapterFor('application');
     const results = { auth: null, mounts: null, audit: null, policies: null };
-    const safeFetch = (path) =>
+    // Record *why* a fetch produced nothing. Swallowing the error with
+    // `.catch(() => null)` is what let a 405 on sys/policies/acl sit behind a
+    // permanent em-dash for the life of the screen: indistinguishable from
+    // "there are none". Keep degrading gracefully, but keep the reason.
+    const failures = {};
+    const safeFetch = (key, path) =>
       adapter
         .ajax(path, 'GET')
         .then((resp) => resp)
-        .catch(() => null);
+        .catch((err) => {
+          failures[key] = (err && (err.httpStatus || err.status)) || 'error';
+          return null;
+        });
 
     try {
       const [auth, mounts, audit, policies] = yield Promise.all([
-        safeFetch('/v1/sys/auth'),
-        safeFetch('/v1/sys/mounts'),
-        safeFetch('/v1/sys/audit'),
+        safeFetch('auth', '/v1/sys/auth'),
+        safeFetch('mounts', '/v1/sys/mounts'),
+        safeFetch('audit', '/v1/sys/audit'),
         // sys/policies/acl is a LIST endpoint - a plain GET returns 405.
-        safeFetch('/v1/sys/policies/acl?list=true'),
+        safeFetch('policies', '/v1/sys/policies/acl?list=true'),
       ]);
       results.auth = auth;
       results.mounts = mounts;
       results.audit = audit;
       results.policies = policies;
       this.countsState = results;
+      this.countsFailures = failures;
       this.countsError = null;
     } catch (err) {
       this.countsError = err;
@@ -319,6 +329,7 @@ export default class DashboardBentoComponent extends Component {
   }
   get authMethodsMeta() {
     const a = this.countsState && this.countsState.auth;
+    if (this.countsFailures.auth) return `sys/auth unavailable (${this.countsFailures.auth})`;
     if (!a) return 'Source · sys/auth';
     const keys = Object.keys(a || {}).filter((k) => k.endsWith('/'));
     return keys.length === 0 ? 'No auth methods mounted' : 'Source · sys/auth';
@@ -331,6 +342,7 @@ export default class DashboardBentoComponent extends Component {
   }
   get secretEnginesMeta() {
     const m = this.countsState && this.countsState.mounts;
+    if (this.countsFailures.mounts) return `sys/mounts unavailable (${this.countsFailures.mounts})`;
     if (!m) return 'Source · sys/mounts';
     const keys = Object.keys(m || {}).filter((k) => k.endsWith('/'));
     return keys.length === 0 ? 'No secret engines mounted' : 'Source · sys/mounts';
