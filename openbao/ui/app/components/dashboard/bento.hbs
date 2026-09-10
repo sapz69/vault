@@ -161,7 +161,12 @@
       <div class="dashboard-panel-body">
         <div class="dashboard-quicklinks">
           {{#each this.quickLinks as |link|}}
-            <LinkTo @route={{link.route}} class="dashboard-quicklink" data-test-quicklink={{link.id}}>
+            <LinkTo
+              @route={{link.route}}
+              @models={{if link.model (array link.model) (array)}}
+              class="dashboard-quicklink"
+              data-test-quicklink={{link.id}}
+            >
               <Icon @name={{link.icon}} @size="16" class="dashboard-quicklink-icon" />
               {{link.label}}
             </LinkTo>

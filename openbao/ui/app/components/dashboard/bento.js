@@ -145,7 +145,8 @@ export default class DashboardBentoComponent extends Component {
         safeFetch('/v1/sys/auth'),
         safeFetch('/v1/sys/mounts'),
         safeFetch('/v1/sys/audit'),
-        safeFetch('/v1/sys/policies/acl'),
+        // sys/policies/acl is a LIST endpoint - a plain GET returns 405.
+        safeFetch('/v1/sys/policies/acl?list=true'),
       ]);
       results.auth = auth;
       results.mounts = mounts;
@@ -161,11 +162,15 @@ export default class DashboardBentoComponent extends Component {
   @task *loadNamespacesTask() {
     const adapter = this.store.adapterFor('application');
     try {
-      const resp = yield adapter.ajax('/v1/sys/namespaces', 'GET');
-      this.namespacesState = resp;
+      // sys/namespaces is a LIST endpoint; a plain GET returns 405.
+      const resp = yield adapter.ajax('/v1/sys/namespaces?list=true', 'GET');
+      this.namespacesState = { keys: (resp && resp.data && resp.data.keys) || [] };
       this.namespacesError = null;
     } catch (err) {
-      this.namespacesError = err;
+      // 404/405 means this build does not expose namespaces at all - that is a
+      // capability gap, not an error worth surfacing on the tile.
+      const status = err && (err.httpStatus || err.status);
+      this.namespacesError = status === 404 || status === 405 ? null : err;
       this.namespacesState = { keys: [] };
     }
   }
@@ -309,32 +314,34 @@ export default class DashboardBentoComponent extends Component {
   get authMethodsValue() {
     const a = this.countsState && this.countsState.auth;
     if (!a) return '—';
-    const keys = Object.keys(a || {}).filter((k) => !k.endsWith('/'));
+    const keys = Object.keys(a || {}).filter((k) => k.endsWith('/'));
     return String(keys.length);
   }
   get authMethodsMeta() {
     const a = this.countsState && this.countsState.auth;
     if (!a) return 'Source · sys/auth';
-    const keys = Object.keys(a || {}).filter((k) => !k.endsWith('/'));
+    const keys = Object.keys(a || {}).filter((k) => k.endsWith('/'));
     return keys.length === 0 ? 'No auth methods mounted' : 'Source · sys/auth';
   }
   get secretEnginesValue() {
     const m = this.countsState && this.countsState.mounts;
     if (!m) return '—';
-    const keys = Object.keys(m || {}).filter((k) => !k.endsWith('/'));
+    const keys = Object.keys(m || {}).filter((k) => k.endsWith('/'));
     return String(keys.length);
   }
   get secretEnginesMeta() {
     const m = this.countsState && this.countsState.mounts;
     if (!m) return 'Source · sys/mounts';
-    const keys = Object.keys(m || {}).filter((k) => !k.endsWith('/'));
+    const keys = Object.keys(m || {}).filter((k) => k.endsWith('/'));
     return keys.length === 0 ? 'No secret engines mounted' : 'Source · sys/mounts';
   }
   get auditDevicesValue() {
     const a = this.countsState && this.countsState.audit;
     if (!a) return '—';
     if (Array.isArray(a)) return String(a.length);
-    if (typeof a === 'object') return String(Object.keys(a).length);
+    // Mounted audit devices are the keys ending in '/'; everything else on the
+    // response is the standard envelope (request_id, lease_id, data, ...).
+    if (typeof a === 'object') return String(Object.keys(a).filter((k) => k.endsWith('/')).length);
     return '—';
   }
   get auditStatusLabel() {
@@ -350,7 +357,9 @@ export default class DashboardBentoComponent extends Component {
   get policiesValue() {
     const p = this.countsState && this.countsState.policies;
     if (!p) return '—';
-    const keys = Array.isArray(p.keys) ? p.keys : [];
+    // A LIST response nests the names under `data.keys`.
+    const raw = (p.data && p.data.keys) || p.keys;
+    const keys = Array.isArray(raw) ? raw : [];
     return String(keys.length);
   }
 
@@ -411,7 +420,10 @@ export default class DashboardBentoComponent extends Component {
     return [
       { id: 'secrets', route: 'vault.cluster.secrets', label: 'Secrets engines', icon: 'key' },
       { id: 'access', route: 'vault.cluster.access', label: 'Access management', icon: 'folder-users' },
-      { id: 'policies', route: 'vault.cluster.policies', label: 'Policies', icon: 'file-text' },
+      // `vault.cluster.policies` is declared as `/policies/:type`, so a LinkTo
+      // without a model throws and puts Ember into an unrecoverable render
+      // state. 'acl' is the only policy type OpenBao exposes.
+      { id: 'policies', route: 'vault.cluster.policies', model: 'acl', label: 'Policies', icon: 'file-text' },
       { id: 'tools', route: 'vault.cluster.tools', label: 'Tools', icon: 'build' },
     ];
   }
