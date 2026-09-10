@@ -56,6 +56,21 @@ export default Route.extend({
     const params = this.paramsFor(this.routeName);
     const prefix = params.prefix ? params.prefix : '';
     const has404 = this.has404;
+    // `model()` returns undefined when the parent capabilities record reports no
+    // `list` permission on sys/leases/lookup/ - which is the normal case, because
+    // that path only supports `update`. Without this guard the route throws
+    // "Cannot read properties of undefined (reading 'leases')" and the screen dies.
+    if (!model) {
+      controller.setProperties({
+        hasModel: false,
+        model: null,
+        capabilities: null,
+        baseKey: { id: prefix },
+        has404,
+        filter: '',
+      });
+      return;
+    }
     controller.set('hasModel', true);
     controller.setProperties({
       model: model.leases,

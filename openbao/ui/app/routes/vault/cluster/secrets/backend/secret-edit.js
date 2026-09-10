@@ -11,6 +11,9 @@ import Route from '@ember/routing/route';
 import utils from 'vault/lib/key-utils';
 import { encodePath, normalizePath } from 'vault/utils/path-encoding-helpers';
 import removeRecord from 'vault/utils/remove-record';
+import { supportedSecretBackends } from 'vault/helpers/supported-secret-backends';
+
+const SUPPORTED_BACKENDS = supportedSecretBackends();
 
 export default Route.extend({
   store: service(),
@@ -79,6 +82,15 @@ export default Route.extend({
 
   beforeModel({ to: { queryParams } }) {
     const secret = this.secretParam();
+    // `backend/list` already refuses engine types the UI has no model for; without
+    // the same guard here, reaching create/edit directly (e.g. via URL) resolves a
+    // modelType of `undefined` and blows up inside path-help with
+    // "newModel.proto(...).getHelpUrl is not a function". Redirect instead.
+    const backend = this.enginePathParam();
+    const engineType = this.store.peekRecord('secret-engine', backend)?.engineType;
+    if (!engineType || !SUPPORTED_BACKENDS.includes(engineType)) {
+      return this.router.transitionTo('vault.cluster.secrets');
+    }
     return this.buildModel(secret, queryParams).then(() => {
       const parentKey = utils.parentKeyForKey(secret);
       const mode = this.routeName.split('.').pop();
