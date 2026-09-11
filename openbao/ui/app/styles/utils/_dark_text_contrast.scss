@@ -1,0 +1,110 @@
+/**
+ * Dark-theme text contrast corrections.
+ *
+ * This app renders on the Himitsu dark palette (--hv-bg #0a0a0b), but a number
+ * of Bulma helpers and element defaults still carry their light-theme values.
+ * Measured against WCAG AA (4.5:1 for normal text) on the live UI, these were
+ * the failures:
+ *
+ *   #0a0a0a  ($black, via .has-text-black)   1.00:1 on --hv-bg  - invisible
+ *   #363636  (Bulma .title default)          1.64:1 on --hv-bg
+ *   #7c3aed  (--hv-violet used as text)      3.47:1 on --hv-bg
+ *   #6b7280 / #4b5563 (page-header helpers)  4.09 / below AA
+ *
+ * Every element involved was verified to have a transparent own-background, so
+ * re-colouring the text cannot clash with a filled control (a solid violet
+ * primary button keeps its white label).
+ *
+ * Colours come from the design tokens rather than literals, so the light and
+ * high-contrast palettes stay coherent.
+ *
+ * Layout, spacing, weight and size are deliberately untouched.
+ */
+
+// --- Text that Bulma renders black/near-black -------------------------------
+// `.has-text-black` means "strongest text" rather than literally black; on a
+// dark surface the strongest text is --hv-fg.
+.has-text-black,
+a.has-text-black,
+.has-text-black.has-text-weight-semibold {
+  color: var(--hv-fg) !important;
+}
+
+// These inherit $black through Bulma's text helpers.
+.is-underline,
+.is-word-break,
+span.has-text-weight-semibold {
+  color: var(--hv-fg);
+}
+
+// --- Headings and form labels (Bulma .title defaults to #363636) ------------
+.title,
+label.title,
+legend.title,
+h1.title,
+h2.title,
+h3.title,
+h4.title,
+h5.title,
+h6.title,
+.is-label,
+label.is-label {
+  color: var(--hv-fg);
+}
+
+.subtitle {
+  color: var(--hv-fg-muted);
+}
+
+// --- Violet used as text ----------------------------------------------------
+// --hv-violet is tuned as a fill. As text it fails AA (3.47:1), so text and
+// links use the lighter --hv-violet-text (7.27:1). Bulma's text helpers carry
+// !important, so these must too in order to win.
+.has-text-info,
+a.doc-link,
+.button.is-transparent.has-text-info,
+.button.is-outlined.is-primary,
+.button.is-ghost {
+  color: var(--hv-violet-text) !important;
+}
+
+// Plain anchors inherit Bulma's $link (#7c3aed). Scoped to the app frame so
+// the auth screen and any filled control keep their own treatment.
+.hds-app-frame
+  a:not(.button):not([class*='hds-']):not(.has-text-black):not(.ember-a11y-refocus-skip-link) {
+  color: var(--hv-violet-text);
+}
+
+// The skip link is positioned over a light ground when focused, so it must keep
+// a dark foreground - the violet text colour would drop it to 2.61:1 there.
+.ember-a11y-refocus-skip-link {
+  color: #3b1f8b;
+}
+
+.button.is-outlined.is-primary {
+  border-color: var(--hv-violet-text);
+}
+
+// --- Page header helpers ----------------------------------------------------
+// These carry literal Tailwind-ish greys (#6b7280 / #4b5563) that fail on the
+// dark ground; the !important matches the helper-class specificity they lose to.
+.page-header-eyebrow {
+  color: var(--hv-fg-subtle-on-dark) !important;
+}
+
+.page-header-subtitle {
+  color: var(--hv-fg-muted) !important;
+}
+
+// --- Secondary text sitting on dark surfaces --------------------------------
+// These all resolved to --hv-fg-subtle (#6b6b72), which is 3.74:1 or worse on
+// the dark palette. They are listed explicitly rather than lightening the token
+// globally, because the same token is used on white surfaces elsewhere.
+.hds-side-nav__list-title,
+.topbar-cluster-eyebrow,
+.kpi-tile-eyebrow,
+.kpi-tile-status,
+.dashboard-panel-sub,
+.masked-value {
+  color: var(--hv-fg-subtle-on-dark);
+}

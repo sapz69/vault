@@ -79,3 +79,7 @@ body {
   background: var(--hv-bg);
   color: var(--hv-fg);
 }
+
+// Loaded last: corrects text colours that Bulma/element defaults leave
+// unreadable on the dark palette. See the file header for the measurements.
+@import './utils/dark_text_contrast';

@@ -21,8 +21,16 @@
   --hv-fg: #fafaf7;
   --hv-fg-muted: #a1a1aa;
   --hv-fg-subtle: #6b6b72;
+  // --hv-fg-subtle is also used on light surfaces (Bulma .input renders on
+  // white), so it cannot simply be lightened. This variant is for secondary
+  // text that sits on a dark surface: 6.60:1 on --hv-bg, 5.22:1 on --hv-bg-3,
+  // versus 3.74 / 2.96 for --hv-fg-subtle.
+  --hv-fg-subtle-on-dark: #9494a0;
   --hv-violet: #7c3aed;
   --hv-violet-glow: #a78bfa;
+  // --hv-violet is a fill colour: as *text* on a dark surface it is only
+  // 3.47:1. Use this for violet text/links instead - 7.27:1 on --hv-bg.
+  --hv-violet-text: #a78bfa;
   --hv-violet-soft: #2a1f4a;
   --hv-success: #4ade80;
   --hv-warn: #fcd34d;
@@ -40,8 +48,10 @@
   --hv-fg: #1a1a1d;
   --hv-fg-muted: #4a4a52;
   --hv-fg-subtle: #76767e;
+  --hv-fg-subtle-on-dark: #5f5f68;
   --hv-violet: #6d28d9;
   --hv-violet-glow: #7c3aed;
+  --hv-violet-text: #6d28d9;
   --hv-violet-soft: #ede9fe;
   --hv-success: #16a34a;
   --hv-warn: #b45309;
@@ -55,8 +65,10 @@
   --hv-fg: #ffffff;
   --hv-fg-muted: #e4e4e7;
   --hv-fg-subtle: #d4d4d8;
+  --hv-fg-subtle-on-dark: #e4e4e7;
   --hv-violet: #c4b5fd;
   --hv-violet-glow: #ddd6fe;
+  --hv-violet-text: #ddd6fe;
   --hv-violet-soft: #4c1d95;
   --hv-success: #86efac;
   --hv-warn: #fde68a;
