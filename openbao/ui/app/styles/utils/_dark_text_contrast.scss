@@ -64,7 +64,8 @@ label.is-label {
 a.doc-link,
 .button.is-transparent.has-text-info,
 .button.is-outlined.is-primary,
-.button.is-ghost {
+.button.is-ghost,
+button.link {
   color: var(--hv-violet-text) !important;
 }
 
@@ -73,6 +74,27 @@ a.doc-link,
 .hds-app-frame
   a:not(.button):not([class*='hds-']):not(.has-text-black):not(.ember-a11y-refocus-skip-link) {
   color: var(--hv-violet-text);
+}
+
+// --- Swagger UI (the API explorer) ------------------------------------------
+// Swagger ships a complete light theme and paints some of its own light
+// backgrounds, but its root container is transparent - so parts of it were
+// rendering over the app's dark ground. That mismatch, not any single colour,
+// is why this screen had by far the most failures: Swagger's own dark text
+// (#3b4151) measured 1.72:1 over --hv-bg-2.
+//
+// Giving the container an explicit light ground lets Swagger's own palette work
+// as designed, which is what a vendored light-theme component needs.
+.swagger-ui {
+  background: #ffffff;
+}
+
+// The anchor rule above carries four :not() clauses - specificity (0,5,1) -
+// so `.swagger-ui a` at (0,1,1) cannot win without !important.
+// #175cd3 measures 5.99:1 on white.
+.swagger-ui a,
+.swagger-ui a.link {
+  color: #175cd3 !important;
 }
 
 // The skip link is positioned over a light ground when focused, so it must keep
@@ -107,4 +129,44 @@ a.doc-link,
 .dashboard-panel-sub,
 .masked-value {
   color: var(--hv-fg-subtle-on-dark);
+}
+
+// Swagger's HTTP method badges are white (or tinted) text on pale fills -
+// 1.19:1 for GET, 1.60:1 for PATCH, 2.78:1 for POST. That is upstream Swagger
+// styling, not something this app introduced, but it is the least readable text
+// on any screen here. Each fill is darkened to the same hue so the semantic
+// colour coding is preserved and white text clears AA.
+.swagger-ui .opblock .opblock-summary-method {
+  color: #ffffff !important;
+  text-shadow: none;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  background: #1565c0 !important; // 5.75:1
+}
+.swagger-ui .opblock.opblock-post .opblock-summary-method {
+  background: #1b7a4f !important; // 5.33:1
+}
+.swagger-ui .opblock.opblock-put .opblock-summary-method {
+  background: #9a5b00 !important; // 5.43:1
+}
+.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+  background: #b3261e !important; // 6.54:1
+}
+.swagger-ui .opblock.opblock-patch .opblock-summary-method {
+  background: #0f6b59 !important; // 6.43:1
+}
+.swagger-ui .opblock.opblock-head .opblock-summary-method {
+  background: #6b21a8 !important; // 8.72:1
+}
+.swagger-ui .opblock.opblock-options .opblock-summary-method {
+  background: #0b4fa8 !important; // 7.78:1
+}
+
+// Swagger greys out deprecated operations, so their badge keeps white text on
+// #ebebeb - 1.19:1, the single worst ratio in the whole UI. The .opblock here
+// carries .opblock-deprecated instead of .opblock-<method>, so the rules above
+// do not reach it. Muted but readable.
+.swagger-ui .opblock.opblock-deprecated .opblock-summary-method {
+  background: #52525b !important; // 7.54:1 with white
 }
