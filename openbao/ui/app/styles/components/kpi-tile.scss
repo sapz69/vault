@@ -71,7 +71,8 @@
     color: var(--hv-danger);
   }
   &.is-muted {
-    color: var(--hv-fg-subtle);
+    // dark tile surface - --hv-fg-subtle is only 3.56:1 here
+    color: var(--hv-fg-subtle-on-dark);
   }
 }
 

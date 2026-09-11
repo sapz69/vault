@@ -55,7 +55,8 @@
   gap: $spacing-xs;
   font-family: $family-monospace;
   font-size: $size-9;
-  color: var(--hv-fg-subtle);
+  // dark dashboard surface - --hv-fg-subtle is only 3.74:1 here
+  color: var(--hv-fg-subtle-on-dark);
 
   .dashboard-meta-dot {
     width: 6px;

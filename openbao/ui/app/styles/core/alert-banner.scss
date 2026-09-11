@@ -7,5 +7,8 @@
   border: 0;
   margin-top: $spacing-xxs;
 
-  color: var(--hv-fg);
+  // Bulma's .message variants paint a light tinted background (e.g. #fffdf6 for
+  // is-warning) regardless of the app theme, so this must be a dark foreground.
+  // It previously used --hv-fg, which measured 1.03:1 - effectively invisible.
+  color: #1a1a1d;
 }

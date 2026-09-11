@@ -1,0 +1,172 @@
+/**
+ * Dark-theme text contrast corrections.
+ *
+ * This app renders on the Himitsu dark palette (--hv-bg #0a0a0b), but a number
+ * of Bulma helpers and element defaults still carry their light-theme values.
+ * Measured against WCAG AA (4.5:1 for normal text) on the live UI, these were
+ * the failures:
+ *
+ *   #0a0a0a  ($black, via .has-text-black)   1.00:1 on --hv-bg  - invisible
+ *   #363636  (Bulma .title default)          1.64:1 on --hv-bg
+ *   #7c3aed  (--hv-violet used as text)      3.47:1 on --hv-bg
+ *   #6b7280 / #4b5563 (page-header helpers)  4.09 / below AA
+ *
+ * Every element involved was verified to have a transparent own-background, so
+ * re-colouring the text cannot clash with a filled control (a solid violet
+ * primary button keeps its white label).
+ *
+ * Colours come from the design tokens rather than literals, so the light and
+ * high-contrast palettes stay coherent.
+ *
+ * Layout, spacing, weight and size are deliberately untouched.
+ */
+
+// --- Text that Bulma renders black/near-black -------------------------------
+// `.has-text-black` means "strongest text" rather than literally black; on a
+// dark surface the strongest text is --hv-fg.
+.has-text-black,
+a.has-text-black,
+.has-text-black.has-text-weight-semibold {
+  color: var(--hv-fg) !important;
+}
+
+// These inherit $black through Bulma's text helpers.
+.is-underline,
+.is-word-break,
+span.has-text-weight-semibold {
+  color: var(--hv-fg);
+}
+
+// --- Headings and form labels (Bulma .title defaults to #363636) ------------
+.title,
+label.title,
+legend.title,
+h1.title,
+h2.title,
+h3.title,
+h4.title,
+h5.title,
+h6.title,
+.is-label,
+label.is-label {
+  color: var(--hv-fg);
+}
+
+.subtitle {
+  color: var(--hv-fg-muted);
+}
+
+// --- Violet used as text ----------------------------------------------------
+// --hv-violet is tuned as a fill. As text it fails AA (3.47:1), so text and
+// links use the lighter --hv-violet-text (7.27:1). Bulma's text helpers carry
+// !important, so these must too in order to win.
+.has-text-info,
+a.doc-link,
+.button.is-transparent.has-text-info,
+.button.is-outlined.is-primary,
+.button.is-ghost,
+button.link {
+  color: var(--hv-violet-text) !important;
+}
+
+// Plain anchors inherit Bulma's $link (#7c3aed). Scoped to the app frame so
+// the auth screen and any filled control keep their own treatment.
+.hds-app-frame
+  a:not(.button):not([class*='hds-']):not(.has-text-black):not(.ember-a11y-refocus-skip-link) {
+  color: var(--hv-violet-text);
+}
+
+// --- Swagger UI (the API explorer) ------------------------------------------
+// Swagger ships a complete light theme and paints some of its own light
+// backgrounds, but its root container is transparent - so parts of it were
+// rendering over the app's dark ground. That mismatch, not any single colour,
+// is why this screen had by far the most failures: Swagger's own dark text
+// (#3b4151) measured 1.72:1 over --hv-bg-2.
+//
+// Giving the container an explicit light ground lets Swagger's own palette work
+// as designed, which is what a vendored light-theme component needs.
+.swagger-ui {
+  background: #ffffff;
+}
+
+// The anchor rule above carries four :not() clauses - specificity (0,5,1) -
+// so `.swagger-ui a` at (0,1,1) cannot win without !important.
+// #175cd3 measures 5.99:1 on white.
+.swagger-ui a,
+.swagger-ui a.link {
+  color: #175cd3 !important;
+}
+
+// The skip link is positioned over a light ground when focused, so it must keep
+// a dark foreground - the violet text colour would drop it to 2.61:1 there.
+.ember-a11y-refocus-skip-link {
+  color: #3b1f8b;
+}
+
+.button.is-outlined.is-primary {
+  border-color: var(--hv-violet-text);
+}
+
+// --- Page header helpers ----------------------------------------------------
+// These carry literal Tailwind-ish greys (#6b7280 / #4b5563) that fail on the
+// dark ground; the !important matches the helper-class specificity they lose to.
+.page-header-eyebrow {
+  color: var(--hv-fg-subtle-on-dark) !important;
+}
+
+.page-header-subtitle {
+  color: var(--hv-fg-muted) !important;
+}
+
+// --- Secondary text sitting on dark surfaces --------------------------------
+// These all resolved to --hv-fg-subtle (#6b6b72), which is 3.74:1 or worse on
+// the dark palette. They are listed explicitly rather than lightening the token
+// globally, because the same token is used on white surfaces elsewhere.
+.hds-side-nav__list-title,
+.topbar-cluster-eyebrow,
+.kpi-tile-eyebrow,
+.kpi-tile-status,
+.dashboard-panel-sub,
+.masked-value {
+  color: var(--hv-fg-subtle-on-dark);
+}
+
+// Swagger's HTTP method badges are white (or tinted) text on pale fills -
+// 1.19:1 for GET, 1.60:1 for PATCH, 2.78:1 for POST. That is upstream Swagger
+// styling, not something this app introduced, but it is the least readable text
+// on any screen here. Each fill is darkened to the same hue so the semantic
+// colour coding is preserved and white text clears AA.
+.swagger-ui .opblock .opblock-summary-method {
+  color: #ffffff !important;
+  text-shadow: none;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  background: #1565c0 !important; // 5.75:1
+}
+.swagger-ui .opblock.opblock-post .opblock-summary-method {
+  background: #1b7a4f !important; // 5.33:1
+}
+.swagger-ui .opblock.opblock-put .opblock-summary-method {
+  background: #9a5b00 !important; // 5.43:1
+}
+.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+  background: #b3261e !important; // 6.54:1
+}
+.swagger-ui .opblock.opblock-patch .opblock-summary-method {
+  background: #0f6b59 !important; // 6.43:1
+}
+.swagger-ui .opblock.opblock-head .opblock-summary-method {
+  background: #6b21a8 !important; // 8.72:1
+}
+.swagger-ui .opblock.opblock-options .opblock-summary-method {
+  background: #0b4fa8 !important; // 7.78:1
+}
+
+// Swagger greys out deprecated operations, so their badge keeps white text on
+// #ebebeb - 1.19:1, the single worst ratio in the whole UI. The .opblock here
+// carries .opblock-deprecated instead of .opblock-<method>, so the rules above
+// do not reach it. Muted but readable.
+.swagger-ui .opblock.opblock-deprecated .opblock-summary-method {
+  background: #52525b !important; // 7.54:1 with white
+}
