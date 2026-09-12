@@ -76,6 +76,14 @@ button.link {
   color: var(--hv-violet-text);
 }
 
+// The rule above has higher specificity than core/title.scss's `.title > a`,
+// so a couple of screens (leases show/list/error) that wrap their <h1> text
+// in a LinkTo back to the list root had their heading turn link-violet
+// instead of reading as a heading. Restore it explicitly.
+.title > a {
+  color: var(--hv-fg) !important;
+}
+
 // --- Swagger UI (the API explorer) ------------------------------------------
 // Swagger ships a complete light theme and paints some of its own light
 // backgrounds, but its root container is transparent - so parts of it were

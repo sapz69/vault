@@ -1,0 +1,56 @@
+/**
+ * Loading indicator.
+ *
+ * The three concentric parts of the brand mark pulse in sequence — outer shell,
+ * inner shell, core — so the mark stays legible the whole time. The previous
+ * animation scaled each shape to zero, which works for abstract shapes but makes
+ * a logo mark disappear and reappear.
+ *
+ * Honours prefers-reduced-motion by falling back to the static mark.
+ */
+
+@keyframes brand-loading-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.94);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+#brand-loading {
+  overflow: visible;
+
+  path,
+  circle {
+    animation: brand-loading-pulse 1.4s infinite ease-in-out;
+    transform-origin: 50% 50%;
+  }
+
+  .brand-loading-order-1 {
+    animation-delay: 0s;
+  }
+
+  .brand-loading-order-2 {
+    animation-delay: 0.18s;
+  }
+
+  .brand-loading-order-3 {
+    animation-delay: 0.36s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #brand-loading {
+    path,
+    circle {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

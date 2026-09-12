@@ -8,6 +8,7 @@
 .input,
 .textarea {
   align-items: center;
+  background-color: var(--hv-bg-2);
   border-radius: $radius;
   border: $base-border;
   box-shadow: 0 4px 1px rgba(0, 0, 0, 0.2) inset;
